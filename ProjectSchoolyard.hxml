@@ -1,0 +1,4 @@
+-lib nme
+-lib flixel
+-cp source
+-main Test
