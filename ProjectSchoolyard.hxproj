@@ -4,22 +4,22 @@
   <output>
     <movie outputType="CustomBuild" />
     <movie input="" />
-    <movie path="Project.xml" />
+    <movie path="project.xml" />
     <movie fps="60" />
     <movie width="640" />
     <movie height="480" />
     <movie version="1" />
     <movie minorVersion="0" />
-    <movie platform="Neko" />
+    <movie platform="Lime" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\cygdrive\c\HaxeToolkit\haxe\lib\flixel-addons\1,1,0" />
-    <class path="C:\cygdrive\c\HaxeToolkit\haxe\lib\flixel-ui\1,0,2" />
-    <class path="C:\cygdrive\c\HaxeToolkit\haxe\lib\flixel\3,3,8" />
-    <class path="C:\cygdrive\c\HaxeToolkit\haxe\lib\lime\2,4,1" />
-    <class path="C:\cygdrive\c\HaxeToolkit\haxe\lib\openfl\3,0,6" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\1,1,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel-ui\1,0,2" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel\3,3,8" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\2,4,1" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\3,0,6" />
     <class path="source" />
     <class path="export\windows\neko\haxe" />
   </classpaths>
