@@ -36,7 +36,7 @@ class TestState extends FlxState
 			actionBar = new ActionBar(actions);
 		add(actionBar);
 		
-		add(new ConversationUI());
+		//add(new ConversationUI());
 	}
 	
 	private function actions(_action:String)
