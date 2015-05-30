@@ -1,8 +1,11 @@
 package states;
 
 import flixel.FlxState;
-import game.Conversation;
+import game.ConversationLoader;
 import game.Database;
+import ui.ActionBar;
+import ui.ConversationUI;
+import ui.Gadget;
 
 /**
  * @author Sjoer van der Ploeg
@@ -13,7 +16,9 @@ import game.Database;
 class TestState extends FlxState
 {
 	private static var dbConnection:Database;
-	private static var conversation:Conversation;
+	private static var conversation:ConversationLoader;
+	private static var gadget:Gadget;
+	private static var actionBar:ActionBar;
 	
 	/**
 	 * Progress to the next dialog or set an entry point.
@@ -22,22 +27,42 @@ class TestState extends FlxState
 	{
 		super.create();
 		
-		conversationText("cyberbully");
+		loadConversation();
+		//trace(conversation.text());
 		
-		trace(conversation.text());
+			gadget = new Gadget();
+		add(gadget);
+		
+			actionBar = new ActionBar(actions);
+		add(actionBar);
+		
+		add(new ConversationUI());
+	}
+	
+	private function actions(_action:String)
+	{
+		trace(_action);
 	}
 	
 	/**
-	 * Setup the conversation by case name.
-	 * 
-	 * @param _case	the current case.
+	 * Setup the conversation.
 	 */
-	private function conversationText(_case:String)
+	private function loadConversation()
 	{
-		dbConnection = new Database(_case);
+		dbConnection = new Database("stories");
 		
-		var _caseParts:Array<String> = dbConnection.readCaseParts(_case);
-			conversation = new Conversation(_case, _caseParts[0]);
+		var _caseParts:Array<String> = dbConnection.readCaseParts();
+			conversation = new ConversationLoader(_caseParts[0]);
+	}
+	
+	/**
+	 * Update whatever floats your boat.
+	 */
+	override public function update()
+	{
+		super.update();
+		
+		actionBar.visible = !gadget.gadgetOpen;
 	}
 	
 	/**

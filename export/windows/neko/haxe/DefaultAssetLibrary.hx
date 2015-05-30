@@ -49,14 +49,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
-		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
-		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
-		path.set ("assets/data/stories.sqlite", "assets/data/stories.sqlite");
-		type.set ("assets/data/stories.sqlite", AssetType.BINARY);
 		path.set ("assets/images/actionbar/Background.png", "assets/images/actionbar/Background.png");
 		type.set ("assets/images/actionbar/Background.png", AssetType.IMAGE);
-		path.set ("assets/images/actionbar/Button.png", "assets/images/actionbar/Button.png");
-		type.set ("assets/images/actionbar/Button.png", AssetType.IMAGE);
+		path.set ("assets/images/actionbar/ButtonHighlight.png", "assets/images/actionbar/ButtonHighlight.png");
+		type.set ("assets/images/actionbar/ButtonHighlight.png", AssetType.IMAGE);
+		path.set ("assets/images/actionbar/ButtonNormal.png", "assets/images/actionbar/ButtonNormal.png");
+		type.set ("assets/images/actionbar/ButtonNormal.png", AssetType.IMAGE);
 		path.set ("assets/images/characters/SoccerGirl.png", "assets/images/characters/SoccerGirl.png");
 		type.set ("assets/images/characters/SoccerGirl.png", AssetType.IMAGE);
 		path.set ("assets/images/conversation/TextfieldBigBackground.png", "assets/images/conversation/TextfieldBigBackground.png");
@@ -87,14 +85,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/map/zones/prototype/Background.png", AssetType.IMAGE);
 		path.set ("assets/images/menu/Background.png", "assets/images/menu/Background.png");
 		type.set ("assets/images/menu/Background.png", AssetType.IMAGE);
-		path.set ("assets/images/menu/Button.png", "assets/images/menu/Button.png");
-		type.set ("assets/images/menu/Button.png", AssetType.IMAGE);
+		path.set ("assets/images/menu/ButtonHighlight.png", "assets/images/menu/ButtonHighlight.png");
+		type.set ("assets/images/menu/ButtonHighlight.png", AssetType.IMAGE);
+		path.set ("assets/images/menu/ButtonNormal.png", "assets/images/menu/ButtonNormal.png");
+		type.set ("assets/images/menu/ButtonNormal.png", AssetType.IMAGE);
 		path.set ("assets/images/scenes/home/Street.png", "assets/images/scenes/home/Street.png");
 		type.set ("assets/images/scenes/home/Street.png", AssetType.IMAGE);
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
 		type.set ("assets/sounds/sounds-go-here.txt", AssetType.TEXT);
+		path.set ("assets/stories/db.sqlite", "assets/stories/db.sqlite");
+		type.set ("assets/stories/db.sqlite", AssetType.BINARY);
 		path.set ("assets/sounds/beep.ogg", "assets/sounds/beep.ogg");
 		type.set ("assets/sounds/beep.ogg", AssetType.SOUND);
 		path.set ("assets/sounds/flixel.ogg", "assets/sounds/flixel.ogg");
@@ -162,16 +164,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif html5
 		
 		var id;
-		id = "assets/data/data-goes-here.txt";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
-		id = "assets/data/stories.sqlite";
-		path.set (id, id);
-		type.set (id, AssetType.BINARY);
 		id = "assets/images/actionbar/Background.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/actionbar/Button.png";
+		id = "assets/images/actionbar/ButtonHighlight.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/actionbar/ButtonNormal.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/characters/SoccerGirl.png";
@@ -219,7 +218,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/images/menu/Background.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/menu/Button.png";
+		id = "assets/images/menu/ButtonHighlight.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/menu/ButtonNormal.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/scenes/home/Street.png";
@@ -231,6 +233,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/sounds/sounds-go-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/stories/db.sqlite";
+		path.set (id, id);
+		type.set (id, AssetType.BINARY);
 		id = "assets/sounds/beep.ogg";
 		path.set (id, id);
 		type.set (id, AssetType.SOUND);
@@ -385,9 +390,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1115,7 +1122,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #elseif html5
+
 
 
 
@@ -1243,14 +1252,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
-		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
-		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
-		path.set ("assets/data/stories.sqlite", "assets/data/stories.sqlite");
-		type.set ("assets/data/stories.sqlite", AssetType.BINARY);
 		path.set ("assets/images/actionbar/Background.png", "assets/images/actionbar/Background.png");
 		type.set ("assets/images/actionbar/Background.png", AssetType.IMAGE);
-		path.set ("assets/images/actionbar/Button.png", "assets/images/actionbar/Button.png");
-		type.set ("assets/images/actionbar/Button.png", AssetType.IMAGE);
+		path.set ("assets/images/actionbar/ButtonHighlight.png", "assets/images/actionbar/ButtonHighlight.png");
+		type.set ("assets/images/actionbar/ButtonHighlight.png", AssetType.IMAGE);
+		path.set ("assets/images/actionbar/ButtonNormal.png", "assets/images/actionbar/ButtonNormal.png");
+		type.set ("assets/images/actionbar/ButtonNormal.png", AssetType.IMAGE);
 		path.set ("assets/images/characters/SoccerGirl.png", "assets/images/characters/SoccerGirl.png");
 		type.set ("assets/images/characters/SoccerGirl.png", AssetType.IMAGE);
 		path.set ("assets/images/conversation/TextfieldBigBackground.png", "assets/images/conversation/TextfieldBigBackground.png");
@@ -1281,14 +1288,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/map/zones/prototype/Background.png", AssetType.IMAGE);
 		path.set ("assets/images/menu/Background.png", "assets/images/menu/Background.png");
 		type.set ("assets/images/menu/Background.png", AssetType.IMAGE);
-		path.set ("assets/images/menu/Button.png", "assets/images/menu/Button.png");
-		type.set ("assets/images/menu/Button.png", AssetType.IMAGE);
+		path.set ("assets/images/menu/ButtonHighlight.png", "assets/images/menu/ButtonHighlight.png");
+		type.set ("assets/images/menu/ButtonHighlight.png", AssetType.IMAGE);
+		path.set ("assets/images/menu/ButtonNormal.png", "assets/images/menu/ButtonNormal.png");
+		type.set ("assets/images/menu/ButtonNormal.png", AssetType.IMAGE);
 		path.set ("assets/images/scenes/home/Street.png", "assets/images/scenes/home/Street.png");
 		type.set ("assets/images/scenes/home/Street.png", AssetType.IMAGE);
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
 		type.set ("assets/sounds/sounds-go-here.txt", AssetType.TEXT);
+		path.set ("assets/stories/db.sqlite", "assets/stories/db.sqlite");
+		type.set ("assets/stories/db.sqlite", AssetType.BINARY);
 		path.set ("assets/sounds/beep.ogg", "assets/sounds/beep.ogg");
 		type.set ("assets/sounds/beep.ogg", AssetType.SOUND);
 		path.set ("assets/sounds/flixel.ogg", "assets/sounds/flixel.ogg");
@@ -1356,16 +1367,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif html5
 		
 		var id;
-		id = "assets/data/data-goes-here.txt";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
-		id = "assets/data/stories.sqlite";
-		path.set (id, id);
-		type.set (id, AssetType.BINARY);
 		id = "assets/images/actionbar/Background.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/actionbar/Button.png";
+		id = "assets/images/actionbar/ButtonHighlight.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/actionbar/ButtonNormal.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/characters/SoccerGirl.png";
@@ -1413,7 +1421,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/images/menu/Background.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/menu/Button.png";
+		id = "assets/images/menu/ButtonHighlight.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/menu/ButtonNormal.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/scenes/home/Street.png";
@@ -1425,6 +1436,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/sounds/sounds-go-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/stories/db.sqlite";
+		path.set (id, id);
+		type.set (id, AssetType.BINARY);
 		id = "assets/sounds/beep.ogg";
 		path.set (id, id);
 		type.set (id, AssetType.SOUND);
@@ -1586,11 +1600,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		#end
 		
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -2302,7 +2318,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #elseif html5
+
 
 
 

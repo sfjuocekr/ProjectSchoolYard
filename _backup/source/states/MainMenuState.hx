@@ -1,13 +1,11 @@
 package states;
 
-import flixel.addons.ui.FlxButtonPlus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.keyboard.FlxKeyList;
-import ui.MainMenu;
 import ui.MenuClass;
 import states.TestState;
 
@@ -17,8 +15,11 @@ import states.TestState;
 
 class MainMenuState extends FlxState
 {
-	public static var mainMenuState:FlxState;
-	private static var mainMenu:MainMenu;
+	//private var menu:MenuClass = new MenuClass(FlxG.width * 0.5, FlxG.height * 0.5, 160, 32, true);	
+	
+	private var bgSprite:FlxSprite = new FlxSprite();
+	private var buttonSprite:FlxSprite = new FlxSprite();
+	private var buttons:FlxSpriteGroup = new FlxSpriteGroup();
 	
 	/**
 	 * Create the main menu.
@@ -27,13 +28,11 @@ class MainMenuState extends FlxState
 	{
 		super.create();
 		
-		if (mainMenuState == null)
-		{
-			mainMenuState = this;
-			
-				mainMenu = new MainMenu(level);
-			add(mainMenu);
-		}
+		//add(menu);
+		//menu.put("test", level.bind("test"), "assets/images/menu/Button.png", "assets/images/menu/Button.png");
+		
+		add(bgSprite);
+		add(buttons);
 	}
 	
 	/**
@@ -45,11 +44,8 @@ class MainMenuState extends FlxState
 	{
 		switch (_level)
 		{
-			case "test":	FlxG.switchState(new TestState());
-			case "help":	FlxG.switchState(new TestState());
-			case "about":	FlxG.switchState(new TestState());
-			case "exit":	Sys.exit(0);
-			default:		trace("This is not supposed to happen!");
+			case "test": FlxG.switchState(new TestState());
+			default: trace("yoloswag");
 		}
 	}
 	
@@ -60,7 +56,7 @@ class MainMenuState extends FlxState
 	{
 		super.update();
 		
-		if (FlxG.keys.anyJustPressed(["ESCAPE"])) Sys.exit(0);
+		if (FlxG.keys.anyPressed(["ESCAPE"])) Sys.exit(0);
 	}
 	
 	/**
@@ -70,7 +66,8 @@ class MainMenuState extends FlxState
 	{
 		super.destroy();
 		
-		mainMenuState = null;
-		mainMenu = null;
+		bgSprite = null;
+		buttonSprite = null;
+		buttons = null;
 	}
 }

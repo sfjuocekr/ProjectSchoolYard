@@ -17,16 +17,16 @@ class Database extends FlxBasic
 	/**
 	 * Open a new database.
 	 * 
-	 * @param _sqlite		database name under assets/data.
+	 * @param _sqlite	database name under assets/data.
 	 */
-	public function new(?_sqlite:String)
+	public function new(_sqlite:String)
 	{
 		super();
 		
 		if (dbConnection == null)
-			if (FileSystem.exists("assets/" + _sqlite + "/db.sqlite"))
+			if (FileSystem.exists("assets/data/" + _sqlite + ".sqlite"))
 			{
-				dbConnection = Sqlite.open("assets/" + _sqlite + "/db.sqlite");
+				dbConnection = Sqlite.open("assets/data/" + _sqlite + ".sqlite");
 			}
 	}
 	
@@ -59,7 +59,7 @@ class Database extends FlxBasic
 	 * @param	_case		the name of the requested case.
 	 * @return				an array of the available parts.
 	 */
-	public function readCaseParts(): Array<String>
+	public function readCaseParts(_case:String): Array<String>
 	{
 		var _request:ResultSet = dbConnection.request("SELECT * FROM cases");
 		var _result:Array<String> = new Array<String>();

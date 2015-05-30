@@ -16,14 +16,12 @@ class AssetData {
 		
 		if (!initialized) {
 			
-			path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
-			type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-			path.set ("assets/data/stories.sqlite", "assets/data/stories.sqlite");
-			type.set ("assets/data/stories.sqlite", Reflect.field (AssetType, "binary".toUpperCase ()));
 			path.set ("assets/images/actionbar/Background.png", "assets/images/actionbar/Background.png");
 			type.set ("assets/images/actionbar/Background.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/actionbar/Button.png", "assets/images/actionbar/Button.png");
-			type.set ("assets/images/actionbar/Button.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/actionbar/ButtonHighlight.png", "assets/images/actionbar/ButtonHighlight.png");
+			type.set ("assets/images/actionbar/ButtonHighlight.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/actionbar/ButtonNormal.png", "assets/images/actionbar/ButtonNormal.png");
+			type.set ("assets/images/actionbar/ButtonNormal.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/characters/SoccerGirl.png", "assets/images/characters/SoccerGirl.png");
 			type.set ("assets/images/characters/SoccerGirl.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/conversation/TextfieldBigBackground.png", "assets/images/conversation/TextfieldBigBackground.png");
@@ -54,14 +52,18 @@ class AssetData {
 			type.set ("assets/images/map/zones/prototype/Background.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/menu/Background.png", "assets/images/menu/Background.png");
 			type.set ("assets/images/menu/Background.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/menu/Button.png", "assets/images/menu/Button.png");
-			type.set ("assets/images/menu/Button.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/menu/ButtonHighlight.png", "assets/images/menu/ButtonHighlight.png");
+			type.set ("assets/images/menu/ButtonHighlight.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/menu/ButtonNormal.png", "assets/images/menu/ButtonNormal.png");
+			type.set ("assets/images/menu/ButtonNormal.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/scenes/home/Street.png", "assets/images/scenes/home/Street.png");
 			type.set ("assets/images/scenes/home/Street.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 			type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
 			type.set ("assets/sounds/sounds-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+			path.set ("assets/stories/db.sqlite", "assets/stories/db.sqlite");
+			type.set ("assets/stories/db.sqlite", Reflect.field (AssetType, "binary".toUpperCase ()));
 			path.set ("assets/sounds/beep.ogg", "assets/sounds/beep.ogg");
 			type.set ("assets/sounds/beep.ogg", Reflect.field (AssetType, "sound".toUpperCase ()));
 			path.set ("assets/sounds/flixel.ogg", "assets/sounds/flixel.ogg");
