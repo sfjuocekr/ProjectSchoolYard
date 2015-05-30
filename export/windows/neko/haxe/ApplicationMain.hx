@@ -22,7 +22,7 @@ class ApplicationMain {
 	
 	public static function main () {
 		
-		flash.Lib.setPackage ("UGH", "ProjectSchoolyard", "com.example.myapp", "0.0.1");
+		flash.Lib.setPackage ("UGH", "ProjectSchoolYard", "com.example.myapp", "0.0.1");
 		
 		
 		#if ios
@@ -130,7 +130,7 @@ class ApplicationMain {
 			(false ? flash.Lib.FULLSCREEN : 0) |
 			(0 == 4 ? flash.Lib.HW_AA_HIRES : 0) |
 			(0 == 2 ? flash.Lib.HW_AA : 0),
-			"ProjectSchoolyard",
+			"ProjectSchoolYard",
 			null
 			#if mobile, ScaledStage #end
 		);
@@ -307,14 +307,14 @@ class ApplicationMain {
 	public static function main () {
 		
 		#if openfl
-		flash.Lib.setPackage ("UGH", "ProjectSchoolyard", "com.example.myapp", "0.0.1");
+		flash.Lib.setPackage ("UGH", "ProjectSchoolYard", "com.example.myapp", "0.0.1");
 		
 		#end
 		
 		wx.App.boot (function () {
 			
 			
-			frame = wx.Frame.create (null, null, "ProjectSchoolyard", null, { width: 1280, height: 720 });
+			frame = wx.Frame.create (null, null, "ProjectSchoolYard", null, { width: 1280, height: 720 });
 			
 			
 			#if openfl
@@ -483,7 +483,7 @@ class ApplicationMain {
 			borderless: false,
 			company: "UGH",
 			depthBuffer: false,
-			file: "ProjectSchoolyard",
+			file: "ProjectSchoolYard",
 			fps: Std.int (60),
 			fullscreen: false,
 			height: Std.int (720),
@@ -491,7 +491,7 @@ class ApplicationMain {
 			packageName: "com.example.myapp",
 			resizable: false,
 			stencilBuffer: false,
-			title: "ProjectSchoolyard",
+			title: "ProjectSchoolYard",
 			version: "0.0.1",
 			vsync: true,
 			width: Std.int (1280),

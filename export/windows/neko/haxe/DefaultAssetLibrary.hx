@@ -51,6 +51,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
+		path.set ("assets/data/stories.sqlite", "assets/data/stories.sqlite");
+		type.set ("assets/data/stories.sqlite", AssetType.BINARY);
 		path.set ("assets/images/actionbar/Background.png", "assets/images/actionbar/Background.png");
 		type.set ("assets/images/actionbar/Background.png", AssetType.IMAGE);
 		path.set ("assets/images/actionbar/Button.png", "assets/images/actionbar/Button.png");
@@ -163,6 +165,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/data/data-goes-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/data/stories.sqlite";
+		path.set (id, id);
+		type.set (id, AssetType.BINARY);
 		id = "assets/images/actionbar/Background.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
@@ -379,9 +384,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1107,7 +1114,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #elseif html5
+
 
 
 
@@ -1236,6 +1245,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
+		path.set ("assets/data/stories.sqlite", "assets/data/stories.sqlite");
+		type.set ("assets/data/stories.sqlite", AssetType.BINARY);
 		path.set ("assets/images/actionbar/Background.png", "assets/images/actionbar/Background.png");
 		type.set ("assets/images/actionbar/Background.png", AssetType.IMAGE);
 		path.set ("assets/images/actionbar/Button.png", "assets/images/actionbar/Button.png");
@@ -1348,6 +1359,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/data/data-goes-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/data/stories.sqlite";
+		path.set (id, id);
+		type.set (id, AssetType.BINARY);
 		id = "assets/images/actionbar/Background.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
@@ -1571,11 +1585,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		#end
 		
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -2285,7 +2301,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #elseif html5
+
 
 
 

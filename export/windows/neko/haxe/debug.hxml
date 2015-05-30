@@ -15,6 +15,7 @@
 -D tools=2.4.1
 -D lime-legacy
 -D NAPE_NO_INLINE
+-D FLX_NO_DEBUG
 -D no-compilation
 -D native
 -D openfl-native
