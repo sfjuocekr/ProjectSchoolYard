@@ -28,7 +28,10 @@ class TestState extends FlxState
 		super.create();
 		
 		loadConversation();
-		//trace(conversation.text());
+		trace(conversation.text());
+		trace(conversation.text());
+		trace(conversation.text());
+		trace(conversation.text());
 		
 			gadget = new Gadget();
 		add(gadget);

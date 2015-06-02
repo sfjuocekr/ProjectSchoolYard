@@ -12,7 +12,7 @@ class ConversationUI extends FlxSpriteGroup
 {
 	private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/scenes/home/Street.png");
 	private var character:FlxSprite = new FlxSprite(0, 0, "assets/images/characters/SoccerGirl.png");
-	private var bgText:FlxSprite = new(FlxSprite(0, 0, "assets/images/conversation/bgBig.png");
+	private var bgText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgBig.png");
 	
 	//add textfields
 	

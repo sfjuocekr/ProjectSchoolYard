@@ -47,21 +47,8 @@ class ConversationLoader extends FlxBasic
 			index = _index - 1;
 		}
 		
-		if (conversation[index][1] != "null")
-		{
-			while (conversation[index][1] != "null")
-			{
-				_return.push(parse(conversation[index]));
-				
-				next();
-			}
-		}
-		else
-		{
-			_return.push(parse(conversation[index]));
-			
-			next();
-		}
+		if (conversation[index][1] != "null") while (conversation[index][1] != "null") next(_return);
+		else next(_return);
 		
 		if (parse(conversation[index - 1])[2] == "END") index--;
 		
@@ -73,8 +60,10 @@ class ConversationLoader extends FlxBasic
 	 * 
 	 * @param _index	story entry point.
 	 */
-	public function next(?_index:Int)
+	private function next(_text:Array<Dynamic> , ?_index:Int)
 	{
+		_text.push(parse(conversation[index]));
+		
 		if (_index != null) index = _index;
 		else index++;
 	}
