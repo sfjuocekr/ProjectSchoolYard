@@ -10,6 +10,8 @@ import flixel.input.keyboard.FlxKeyList;
 import ui.MainMenu;
 import ui.MenuClass;
 import states.TestState;
+import states.SchoolYard;
+import states.Conversation;
 
 /**
  * @author Sjoer van der Ploeg
@@ -46,8 +48,8 @@ class MainMenuState extends FlxState
 		switch (_level)
 		{
 			case "test":	FlxG.switchState(new TestState());
-			case "help":	FlxG.switchState(new TestState());
-			case "about":	FlxG.switchState(new TestState());
+			case "help":	FlxG.switchState(new SchoolYard());
+			case "about":	FlxG.switchState(new Conversation());
 			case "exit":	Sys.exit(0);
 			default:		trace("This is not supposed to happen!");
 		}

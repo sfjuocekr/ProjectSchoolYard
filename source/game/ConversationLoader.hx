@@ -42,6 +42,7 @@ class ConversationLoader extends FlxBasic
 			
 			return _return;
 		}
+		
 		else if (_index != null)
 		{
 			index = _index - 1;
@@ -49,6 +50,7 @@ class ConversationLoader extends FlxBasic
 		
 		if (conversation[index][1] != "null") while (conversation[index][1] != "null") next(_return);
 		else next(_return);
+		
 		
 		if (parse(conversation[index - 1])[2] == "END") index--;
 		
@@ -77,7 +79,7 @@ class ConversationLoader extends FlxBasic
 	private function parse(_array:Array<String>): Array<String>
 	{
 		var _arrayFill:Array<String> = new Array<String>();
-			_arrayFill.push(_array[1] == "null" ? null : _array[1] == "-1" ? "exit": Std.string(Std.parseInt(_array[1]) + 1));
+			_arrayFill.push(_array[1] == "null" ? null : _array[1] == "-1" ? "0" : Std.string(Std.parseInt(_array[1]) + 1));
 			_arrayFill.push(_array[0]);
 			_arrayFill.push(_array[2]);
 		

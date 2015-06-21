@@ -2,49 +2,41 @@ package states;
 
 import flixel.FlxState;
 import game.ConversationLoader;
-import game.Database;
-import ui.ActionBar;
 import ui.ConversationUI;
-import ui.Gadget;
+import game.Database;
 
 /**
  * @author Sjoer van der Ploeg
  * 
- * This is where I test my shit
+ * Default playstate
  */
 
-class TestState extends FlxState
+class Conversation extends FlxState
 {
 	private static var dbConnection:Database;
 	private static var conversation:ConversationLoader;
-	private static var gadget:Gadget;
-	private static var actionBar:ActionBar;
+	private static var conversationUI:ConversationUI;
+	private static var current:Array<Array<String>>;
 	
 	/**
-	 * Progress to the next dialog or set an entry point.
+	 * Create this state.
 	 */
 	override public function create()
 	{
 		super.create();
 		
 		loadConversation();
-		trace(conversation.text());
-		trace(conversation.text());
-		trace(conversation.text());
-		trace(conversation.text());
 		
-			gadget = new Gadget();
-		add(gadget);
-		
-			actionBar = new ActionBar(actions);
-		add(actionBar);
-		
-		//add(new ConversationUI());
+			conversationUI = new ConversationUI(conversationCallback);
+			conversationUI.set(conversation.text());
+		add(conversationUI);
 	}
 	
-	private function actions(_action:String)
+	private function conversationCallback(_option:Int)
 	{
-		trace(_action);
+		if (_option == 0) Sys.exit(0); // DIRTY HACK
+		
+		conversationUI.set(conversation.text(_option));
 	}
 	
 	/**
@@ -64,18 +56,13 @@ class TestState extends FlxState
 	override public function update()
 	{
 		super.update();
-		
-		actionBar.visible = !gadget.gadgetOpen;
 	}
 	
 	/**
-	 * EXTERMINATE!!!
+	 * EXTERMINATE, EXTERMINATE, EXTERMINATE!
 	 */
 	override public function destroy()
 	{
 		super.destroy();
-		
-		dbConnection = null;
-		conversation = null;
 	}
 }

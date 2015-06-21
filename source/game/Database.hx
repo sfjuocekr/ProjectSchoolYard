@@ -59,12 +59,21 @@ class Database extends FlxBasic
 	 * @param	_case		the name of the requested case.
 	 * @return				an array of the available parts.
 	 */
-	public function readCaseParts(): Array<String>
+	public function readCaseParts(_case): Array<String>
 	{
 		var _request:ResultSet = dbConnection.request("SELECT * FROM cases");
 		var _result:Array<String> = new Array<String>();
 		
-		var _temp = _request.results().pop();
+		var _tmp = _request.results();
+		var _temp = null;
+		
+		for (_index in _tmp)
+		{
+			if (_index.case_name == _case)
+			{
+				_temp = _index;
+			}
+		}
 		
 		for (_index in 0 ... _temp.parts)
 		{
