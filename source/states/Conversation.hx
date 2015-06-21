@@ -27,16 +27,85 @@ class Conversation extends FlxState
 		
 		loadConversation();
 		
+		current = conversation.text();
+		
 			conversationUI = new ConversationUI(conversationCallback);
-			conversationUI.set(conversation.text());
+			conversationUI.set(current);
 		add(conversationUI);
 	}
 	
-	private function conversationCallback(_option:Int)
+	private function conversationCallback(_option:Array<Int>)
 	{
-		if (_option == 0) Sys.exit(0); // DIRTY HACK
+		current = conversation.text(_option[0]);
 		
-		conversationUI.set(conversation.text(_option));
+		if (current[0][0] == "exit")
+		{
+			conversationUI.visible = false;
+			
+			current[0].shift();
+			current[0].pop();
+			
+			if (current[0].length > 0) evaluate(current[0], _option[1]);
+			
+			return;
+		}
+		
+		if (current[0][1] == "gadget")
+		{
+			current[0].shift();
+			current[0].pop();
+			
+			if (current[0].length > 0) evaluate(current[0], _option[1]);
+			
+			conversationCallback([_option[0] + 1, _option[1]]);
+			
+			return;
+		}
+		
+		if (current[0][1] == "inventory")
+		{
+			current[0].shift();
+			current[0].pop();
+			
+			if (current[0].length > 0) evaluate(current[0], _option[1]);
+			
+			conversationCallback([_option[0] + 1, _option[1]]);
+			
+			return;
+		}
+		
+		conversationUI.set(current, _option[1]);
+	}
+	
+	private function evaluate(_commands:Array<String>, _lastBtn:Int)
+	{
+		switch (_commands[0])
+		{
+			case "conversation":
+				{
+					conversation = new ConversationLoader(_commands[1]);
+					
+					conversationCallback([1, _lastBtn]);
+					
+					conversationUI.visible = true; // this should happen when the player talks to the npc again
+				}
+			
+			case "gadget":
+				{
+					trace("Gadget says: " + _commands[1]);
+					
+					//make fancy stuffs
+					
+					conversationUI.visible = false;
+				}
+			
+			case "inventory":
+				{
+					trace("Adding item to inventory: " + _commands[1]);
+					
+					//make fancy stuffs
+				}
+		}
 	}
 	
 	/**

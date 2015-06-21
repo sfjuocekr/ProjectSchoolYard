@@ -17,7 +17,7 @@ class ConversationUI extends FlxSpriteGroup
 	private var character:FlxSprite = new FlxSprite(0, 0, "assets/images/characters/SoccerGirl.png");
 	private var bgText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgBig.png");
 	private var bgNameText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgName.png");
-	
+	private var nameText:FlxText;
 	private var options:Array<FlxButtonPlus> = new Array<FlxButtonPlus>();
 	
 	private var optionCallback:Dynamic->Void;
@@ -35,27 +35,24 @@ class ConversationUI extends FlxSpriteGroup
 	
 	private function add_character()
 	{
-		character.x = FlxG.width - character.width;
-		character.y = FlxG.height - character.height;
-		
+			character.x = FlxG.width - character.width;
+			character.y = FlxG.height - character.height;
 		add(character);
 	}
 	
 	private function add_textFields()
 	{
-		bgText.x = 96;
-		bgText.y = FlxG.height - bgText.height - 96;		
-		bgText.alpha = 0.5;
-		
+			bgText.x = 96;
+			bgText.y = FlxG.height - bgText.height - 96;		
+			bgText.alpha = 0.5;
 		add(bgText);
 		
-		bgNameText.x = 96;
-		bgNameText.y = FlxG.height - bgText.height - 96 - 56;		
-		bgNameText.alpha = 0.5;
-		
+			bgNameText.x = 96;
+			bgNameText.y = FlxG.height - bgText.height - 96 - 56;		
+			bgNameText.alpha = 0.5;
 		add(bgNameText);
 		
-		var nameText = new FlxText(bgNameText.x + 8, bgNameText.y + 8, bgNameText.width - 16, "name", 24, true);
+			nameText = new FlxText(bgNameText.x + 8, bgNameText.y + 8, bgNameText.width - 16, null, 24, true);
 			nameText.alignment = "center";
 		add(nameText);
 		
@@ -75,45 +72,44 @@ class ConversationUI extends FlxSpriteGroup
 		}
 	}
 	
-	public function set(_options:Array<Array<String>>)
+	public function set(_options:Array<Array<String>>, ?_lastBtn:Int = null)
 	{
-		if (_options.length == 1)
-		{
-			options[0].visible = true;
-			options[1].visible = false;
-			options[2].visible = false;
-			
-			options[0].text = _options[0][2];
-			
-			options[0].onClickCallback = optionCallback.bind(Std.parseInt(_options[0][0]));
-		}
+		trace(_options);
 		
-		else if (_options.length == 2)
-		{
-			options[0].visible = true;
-			options[1].visible = true;
-			options[2].visible = false;
-			
-			options[0].text = _options[0][2];
-			options[1].text = _options[1][2];
-			
-			options[0].onClickCallback = optionCallback.bind(Std.parseInt(_options[0][0]));
-			options[1].onClickCallback = optionCallback.bind(Std.parseInt(_options[1][0]));
-		}
+		nameText.text = _options[0].pop();
 		
-		else if (_options.length == 3)
+		for (_index in 0 ... 3)
 		{
-			options[0].visible = true;
-			options[1].visible = true;
-			options[2].visible = true;
+			if (_index < _options.length)
+			{
+				options[_index].text = _options[_index][2];
+				options[_index].onClickCallback = optionCallback.bind([Std.parseInt(_options[_index][0]), _index]);
+				options[_index].visible = true;
+			}
 			
-			options[0].text = _options[0][2];
-			options[1].text = _options[1][2];
-			options[2].text = _options[2][2];
+			else
+			{
+				options[_index].text = null;
+				options[_index].visible = false;
+			}
 			
-			options[0].onClickCallback = optionCallback.bind(Std.parseInt(_options[0][0]));
-			options[1].onClickCallback = optionCallback.bind(Std.parseInt(_options[1][0]));
-			options[2].onClickCallback = optionCallback.bind(Std.parseInt(_options[2][0]));
+			options[_index].textHighlight.visible = (_index == _lastBtn) ? true : false;
+			options[_index].textNormal.visible = (_index == _lastBtn) ? false : true;
 		}
+	}
+	
+	/**
+	 * EXTERMINATE!!!
+	 */
+	override public function destroy()
+	{
+		super.destroy();
+		
+		scene = null;
+		character = null;
+		bgText = null;
+		bgNameText = null;
+		options = null;
+		optionCallback = null;
 	}
 }

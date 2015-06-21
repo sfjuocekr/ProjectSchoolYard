@@ -47,7 +47,7 @@ class Database extends FlxBasic
 			
 			if (row.pointer != null) _pointer = Std.parseInt(row.pointer) - 1;
 			
-			_result.push([row.type, Std.string(_pointer), row.text]);
+			_result.push([row.type, Std.string(_pointer), row.text, row.name]);
 		}
 		
 		return _result;
