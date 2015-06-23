@@ -54,16 +54,18 @@ class StoryContainer
 		stories[_story] = new ConversationLoader(_part);
 	}
 	
-	public function text(_story:String, ?_index:Int = null)		// hack make stories private and use this function to get text
+	public function text(_story:String, ?_index:Int = null): Array<Array<String>>		// hack make stories private and use this function to get text
 	{
-		if (!inited) return;
+		if (!inited) setup();
 		
 		switch (_story)
 		{
 			case "bully":
 			{
-				return; //bully_story.text(_index);
+				return bully_story.text(_index);
 			}
 		}
+		
+		return null;
 	}
 }

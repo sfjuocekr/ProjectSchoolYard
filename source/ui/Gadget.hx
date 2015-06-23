@@ -4,7 +4,10 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import openfl.events.TimerEvent;
+import openfl.utils.Timer;
 
 /**
  * @author Sjoer van der Ploeg
@@ -17,10 +20,17 @@ class Gadget extends FlxSpriteGroup
 	private var background:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Background.png");
 	private var edge:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Edge.png");
 	private var backside:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Backside.png");
+	private var bg:FlxSprite = new FlxSprite(0, 0);
 	
-	private var bg = new FlxSprite(0, 0);
+	private var text:FlxText = new FlxText();
+	private var textRead:Bool = false;
+	
+	private var timer:Timer = new Timer(1000, 1);
 	
 	public var gadgetOpen:Bool = false;
+	
+	private var callback:Dynamic->Void;
+	private var callbackOptions:Array<Int>;
 	
 	public function new(_x:Float = 0, _y:Float = 0)
 	{
@@ -40,6 +50,7 @@ class Gadget extends FlxSpriteGroup
 		
 			background.x = FlxG.width * 0.5 - (background.width * 0.5);
 			background.y = FlxG.height * 0.5 - (background.height * 0.5);
+			background.alpha = 0.5;
 			background.visible = false;
 		add(background);
 		
@@ -50,9 +61,18 @@ class Gadget extends FlxSpriteGroup
 		
 			screen.x = FlxG.width * 0.5 - (screen.width * 0.5);
 			screen.y = FlxG.height * 0.5 - (screen.height * 0.5);
+			screen.alpha = 0.5;
 			screen.visible = false;
 		add(screen);
 		
+			text.x = screen.x + 32;
+			text.y = screen.y + 32;
+			text.fieldWidth = screen.width - 64;
+			text.wordWrap = true;
+			text.size = 32;
+			text.visible = false;
+		add(text);
+
 			backside.x = FlxG.width - backside.width - 64;
 			backside.y = FlxG.height - backside.height - 64;
 			backside.visible = true;
@@ -62,13 +82,47 @@ class Gadget extends FlxSpriteGroup
 		
 		MouseEventManager.add(backside, flip);
 		MouseEventManager.add(screen, flip);
+		
+		timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimer);
 	}
 	
 	private function flip(_sprite:FlxSprite)
 	{
-		bg.visible = edge.visible = background.visible = logo.visible = screen.visible = (_sprite == backside) ? _sprite.visible : !_sprite.visible;
+		if (backside.visible) timer.start();
+		else text.visible = false;
+		
+		if (textRead)
+		{
+			text.text = "";
+			textRead = false;
+			callback(callbackOptions);
+			
+		}
+		
+		gadgetOpen = bg.visible = edge.visible = background.visible = logo.visible = screen.visible = (_sprite == backside);
 		backside.visible = !_sprite.visible;
-		gadgetOpen = screen.visible;
+	}
+	
+	private function onTimer(_event:TimerEvent)
+	{
+		trace(text.text);
+		if (gadgetOpen && text.text != "")
+		{
+			logo.visible = false;
+			text.visible = true;
+			
+			textRead = true; //hack
+		}
+	}
+	
+	public function addNotification(_text:String, _callback:Dynamic->Void, _options:Array<Int>)
+	{
+		text.text = _text;
+		
+		callback = _callback;
+		callbackOptions = _options;
+		
+		//ugly hack, needs an array and some routine to switch notifications etc etc etc
 	}
 	
 	/**

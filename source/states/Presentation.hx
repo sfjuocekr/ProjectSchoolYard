@@ -106,7 +106,9 @@ class Presentation extends FlxState
 			{
 				trace("Gadget says: " + _commands[1]);
 				
-				conversationCallback([_options[0] + 1, _options[1], _options[2]]);
+				gadget.addNotification(_commands[1], conversationCallback, [_options[0] + 1, _options[1], _options[2]]);
+				
+				//conversationCallback([_options[0] + 1, _options[1], _options[2]]);
 				
 				activeElement = "map";
 			}
