@@ -58,7 +58,7 @@ class ConversationUI extends FlxSpriteGroup
 		
 		for (_index in 0 ... 3)
 		{
-			options[_index] = new FlxButtonPlus(bgText.x + 32, bgText.y + 20 + (_index * 56), optionCallback.bind(_index), Std.string(_index), Std.int(bgText.width - 64), 40);
+			options[_index] = new FlxButtonPlus(bgText.x + 32, bgText.y + 20 + (_index * 56), null, Std.string(_index), Std.int(bgText.width - 64), 40);
 			
 			options[_index].alpha = 0;
 			
@@ -72,7 +72,7 @@ class ConversationUI extends FlxSpriteGroup
 		}
 	}
 	
-	public function set(_options:Array<Array<String>>, ?_lastBtn:Int = null)
+	public function set(_options:Array<Array<String>>, _story:Int, ?_lastBtn:Int = null)
 	{
 		trace(_options);
 		
@@ -83,7 +83,7 @@ class ConversationUI extends FlxSpriteGroup
 			if (_index < _options.length)
 			{
 				options[_index].text = _options[_index][2];
-				options[_index].onClickCallback = optionCallback.bind([Std.parseInt(_options[_index][0]), _index]);
+				options[_index].onClickCallback = optionCallback.bind([Std.parseInt(_options[_index][0]), _story, _index]);
 				options[_index].visible = true;
 			}
 			
@@ -94,7 +94,7 @@ class ConversationUI extends FlxSpriteGroup
 			}
 			
 			options[_index].textHighlight.visible = (_index == _lastBtn) ? true : false;
-			options[_index].textNormal.visible = (_index == _lastBtn) ? false : true;
+			options[_index].textNormal.visible = !options[_index].textHighlight.visible;
 		}
 	}
 	

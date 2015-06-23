@@ -8,7 +8,7 @@ import game.Database;
 /**
  * @author Sjoer van der Ploeg
  * 
- * Default playstate
+ * Conversation test
  */
 
 class Conversation extends FlxState
@@ -18,9 +18,6 @@ class Conversation extends FlxState
 	private static var conversationUI:ConversationUI;
 	private static var current:Array<Array<String>>;
 	
-	/**
-	 * Create this state.
-	 */
 	override public function create()
 	{
 		super.create();
@@ -34,77 +31,74 @@ class Conversation extends FlxState
 		add(conversationUI);
 	}
 	
-	private function conversationCallback(_option:Array<Int>)
+	private function conversationCallback(_options:Array<Int>)
 	{
-		current = conversation.text(_option[0]);
+		current = conversation.text(_options[0]);
 		
-		if (current[0][0] == "exit")
+		if (current[0][1] == "player" || current[0][1] == "npc")
 		{
-			conversationUI.visible = false;
-			
-			current[0].shift();
-			current[0].pop();
-			
-			if (current[0].length > 0) evaluate(current[0], _option[1]);
-			
-			return;
+			conversationUI.set(current, _options[1]);
 		}
 		
-		if (current[0][1] == "gadget")
+		else
 		{
-			current[0].shift();
-			current[0].pop();
+			var _result:Array<String> = new Array<String>();
 			
-			if (current[0].length > 0) evaluate(current[0], _option[1]);
+			for (_element in current[0])
+			{
+				if (_element != null) _result.push(_element);
+			}
 			
-			conversationCallback([_option[0] + 1, _option[1]]);
-			
-			return;
+			if (_result.length > 0) evaluate(_result, _options);
+			else trace("YOU FAIL!");		// this should never happen!
 		}
-		
-		if (current[0][1] == "inventory")
-		{
-			current[0].shift();
-			current[0].pop();
-			
-			if (current[0].length > 0) evaluate(current[0], _option[1]);
-			
-			conversationCallback([_option[0] + 1, _option[1]]);
-			
-			return;
-		}
-		
-		conversationUI.set(current, _option[1]);
 	}
 	
-	private function evaluate(_commands:Array<String>, _lastBtn:Int)
+	private function evaluate(_commands:Array<String>, _options:Array<Int>)
 	{
+		trace(_commands);
 		switch (_commands[0])
 		{
 			case "conversation":
-				{
-					conversation = new ConversationLoader(_commands[1]);
-					
-					conversationCallback([1, _lastBtn]);
-					
-					conversationUI.visible = true; // this should happen when the player talks to the npc again
-				}
+			{
+				conversation = new ConversationLoader(_commands[1]);
+				
+				conversationCallback([1, null]);
+				
+				conversationUI.visible = false;
+			}
 			
 			case "gadget":
-				{
-					trace("Gadget says: " + _commands[1]);
-					
-					//make fancy stuffs
-					
-					conversationUI.visible = false;
-				}
+			{
+				trace("Gadget says: " + _commands[1]);
+				
+				conversationCallback([_options[0] + 1, _options[1]]);
+				
+				conversationUI.visible = false;
+			}
+			
+			case "phone":
+			{
+				trace("Phone says: " + _commands[1]);
+				
+				conversationCallback([_options[0] + 1, _options[1]]);
+				
+				conversationUI.visible = false;
+			}
 			
 			case "inventory":
-				{
-					trace("Adding item to inventory: " + _commands[1]);
-					
-					//make fancy stuffs
-				}
+			{
+				trace("Adding item to inventory: " + _commands[1]);
+				
+				conversationCallback([_options[0] + 1, _options[1]]);
+			}
+			
+			case "exit":
+			{
+				conversationCallback([1, null]);
+				
+				conversationUI.visible = false;
+			}
 		}
 	}
 	

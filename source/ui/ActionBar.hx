@@ -52,6 +52,12 @@ class ActionBar extends FlxSpriteGroup
 		
 		for (_button in buttons.members)
 		{
+			cast(_button, FlxButtonPlus).textNormal.size = 32;
+			cast(_button, FlxButtonPlus).textHighlight.size = 32;
+			
+			cast(_button, FlxButtonPlus).textNormal.y += 8;
+			cast(_button, FlxButtonPlus).textHighlight.y += 8;
+			
 			cast(_button, FlxButtonPlus).loadButtonGraphic(normalButton, highlightButton);
 		}
 		

@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.plugin.MouseEventManager;
+import flixel.util.FlxColor;
 
 /**
  * @author Sjoer van der Ploeg
@@ -17,6 +18,8 @@ class Gadget extends FlxSpriteGroup
 	private var edge:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Edge.png");
 	private var backside:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Backside.png");
 	
+	private var bg = new FlxSprite(0, 0);
+	
 	public var gadgetOpen:Bool = false;
 	
 	public function new(_x:Float = 0, _y:Float = 0)
@@ -25,6 +28,10 @@ class Gadget extends FlxSpriteGroup
 		
 		width = FlxG.width;
 		height = FlxG.height;
+		
+			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			bg.visible = false;
+		add(bg);
 		
 			edge.x = FlxG.width * 0.5 - (edge.width * 0.5);
 			edge.y = FlxG.height * 0.5 - (edge.height * 0.5);
@@ -59,7 +66,7 @@ class Gadget extends FlxSpriteGroup
 	
 	private function flip(_sprite:FlxSprite)
 	{
-		edge.visible = background.visible = logo.visible = screen.visible = (_sprite == backside) ? _sprite.visible : !_sprite.visible;
+		bg.visible = edge.visible = background.visible = logo.visible = screen.visible = (_sprite == backside) ? _sprite.visible : !_sprite.visible;
 		backside.visible = !_sprite.visible;
 		gadgetOpen = screen.visible;
 	}
