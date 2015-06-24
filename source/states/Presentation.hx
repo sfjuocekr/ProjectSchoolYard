@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxState;
 import game.ConversationLoader;
+import ui.MapDisplay;
 import ui.ActionBar;
 import ui.ConversationUI;
 import ui.Gadget;
@@ -19,6 +20,7 @@ class Presentation extends FlxState
 	private static var gadget:Gadget;
 	private static var actionBar:ActionBar;
 	private static var conversation:ConversationUI;
+	private static var map:MapDisplay;
 	
 	private var activeElement:String = "map";
 	
@@ -32,6 +34,9 @@ class Presentation extends FlxState
 		super.create();
 		
 		StoryContainer.setup();
+		
+			map = new MapDisplay();
+		add(map);
 		
 			actionBar = new ActionBar(actions);
 		add(actionBar);
@@ -78,6 +83,15 @@ class Presentation extends FlxState
 				
 				conversation.visible = true;		// see the FUCKMYLIFE function.
 				conversation.FUCKMYLIFE();
+			}
+			
+			case "B":
+			{
+				var _directions = map.getDirections();
+				
+				map.setLocation(_directions[Std.random(_directions.length)]);
+				//trace(_directions);
+				//map.setLocation("N");
 			}
 		}
 	}
@@ -167,11 +181,13 @@ class Presentation extends FlxState
 		{
 			case "map":
 			{
+				map.active = true;
 				conversation.visible = false;
 			}
 			
 			case "conversation":
 			{
+				map.active = false;
 				conversation.visible = true;
 			}
 		}
