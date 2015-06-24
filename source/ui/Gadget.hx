@@ -20,14 +20,19 @@ class Gadget extends FlxSpriteGroup
 	private var background:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Background.png");
 	private var edge:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Edge.png");
 	private var backside:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Backside.png");
+	private var notificationSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/gadget/Notification.png");
 	private var bg:FlxSprite = new FlxSprite(0, 0);
 	
 	private var text:FlxText = new FlxText();
-	private var textRead:Bool = false;
+	
+	private var defaultText:String = "There are no messages to be shown right now!";
 	
 	private var timer:Timer = new Timer(1000, 1);
+	private var blinker:Timer = new Timer(250, 0);
 	
+	private var textRead:Bool = false;
 	public var gadgetOpen:Bool = false;
+	private var notification:Bool = false;
 	
 	private var callback:Dynamic->Void;
 	private var callbackOptions:Array<Int>;
@@ -78,12 +83,18 @@ class Gadget extends FlxSpriteGroup
 			backside.visible = true;
 		add(backside);
 		
+			notificationSprite.x = FlxG.width - notificationSprite.width - 64;
+			notificationSprite.y = FlxG.height - notificationSprite.height - 64;
+			notificationSprite.visible = false;
+		add(notificationSprite);
+		
 		FlxG.plugins.add(new MouseEventManager());
 		
 		MouseEventManager.add(backside, flip);
 		MouseEventManager.add(screen, flip);
 		
 		timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimer);
+		blinker.addEventListener(TimerEvent.TIMER, blink);
 	}
 	
 	private function flip(_sprite:FlxSprite)
@@ -96,23 +107,50 @@ class Gadget extends FlxSpriteGroup
 			text.text = "";
 			textRead = false;
 			callback(callbackOptions);
-			
 		}
+		
+		else if (text.text == defaultText) text.text = "";
 		
 		gadgetOpen = bg.visible = edge.visible = background.visible = logo.visible = screen.visible = (_sprite == backside);
 		backside.visible = !_sprite.visible;
+		
+		if (notification && !backside.visible) notificationSprite.visible = false;
 	}
 	
 	private function onTimer(_event:TimerEvent)
 	{
-		trace(text.text);
 		if (gadgetOpen && text.text != "")
 		{
+			notification = false;
+			textRead = true; //hack
+			
 			logo.visible = false;
 			text.visible = true;
-			
-			textRead = true; //hack
 		}
+		
+		else if (gadgetOpen)
+		{
+			text.text = defaultText;
+			
+			logo.visible = false;
+			text.visible = true;
+		}
+	}
+	
+	private function blink(_event:TimerEvent)
+	{
+		if (!notification)
+		{
+			blinker.reset();
+			notificationSprite.visible = false;
+		}
+		
+		else if (notification && backside.visible)
+		{
+			notificationSprite.visible = !notificationSprite.visible;
+		}
+		
+		//else if (!backside.visible) notificationSprite.visible = false;
 	}
 	
 	public function addNotification(_text:String, _callback:Dynamic->Void, _options:Array<Int>)
@@ -123,6 +161,9 @@ class Gadget extends FlxSpriteGroup
 		callbackOptions = _options;
 		
 		//ugly hack, needs an array and some routine to switch notifications etc etc etc
+		
+		notification = true;
+		blinker.start();
 	}
 	
 	/**

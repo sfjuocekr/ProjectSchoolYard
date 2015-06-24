@@ -20,7 +20,6 @@ class Presentation extends FlxState
 	private static var actionBar:ActionBar;
 	private static var conversation:ConversationUI;
 	
-	//private var activeElement:String = "conversation";	// HACK should be map
 	private var activeElement:String = "map";
 	
 	private static var current:Array<Array<Array<String>>>;	//ugly hack
@@ -41,9 +40,10 @@ class Presentation extends FlxState
 		add(gadget);
 		
 			conversation = new ConversationUI(conversationCallback);
+			conversation.visible = false;
 		add(conversation);
 		
-		//hacks
+		//hack starts always at the beginning of a story, move to StoryContainer etc etc etc
 		current = new Array<Array<Array<String>>>();
 		
 		for (_index in 0 ... StoryContainer.stories.length)
@@ -51,9 +51,7 @@ class Presentation extends FlxState
 			current[_index] = StoryContainer.stories[_index].text(1);
 		}
 		
-		conversation.visible = false;
 		conversation.set(current[0], 0);
-		//end of hacks
 	}
 	
 	private function actions(_action:String)
@@ -61,7 +59,26 @@ class Presentation extends FlxState
 		trace(_action);
 		switch(_action)
 		{
-			case "A": activeElement = "conversation";
+			case "A":
+			{
+				// if a notification is open this will error out and open the conversation with the message the gadget should show...
+				// doh, this is due to it loading the second conversation which starts there ... NEEDS FIXING!!!
+				
+				trace(current[0][0]);
+				
+				if (current[0][0][1] != "player")
+				{
+					conversation.set([["0", "player", "I have nothing to say to her yet...", "Kees"]], 0);
+					// the zero above needs to point at whatever the pointer was
+				} // DAT HACK .. oh well it "works" for now!
+				
+				// if only hightlights would work
+				
+				activeElement = "conversation";
+				
+				conversation.visible = true;		// see the FUCKMYLIFE function.
+				conversation.FUCKMYLIFE();
+			}
 		}
 	}
 	
@@ -71,7 +88,7 @@ class Presentation extends FlxState
 		
 		if (current[_options[1]][0][1] == "player" || current[_options[1]][0][1] == "npc")
 		{
-			conversation.set(current[_options[1]], _options[1]);
+			conversation.set(current[_options[1]], _options[1], _options[2]);
 		}
 		
 		else
@@ -90,7 +107,8 @@ class Presentation extends FlxState
 	
 	private function evaluate(_commands:Array<String>, _options:Array<Int>)
 	{
-		trace(_commands + " " + _options);
+		//trace(_commands + " " + _options);
+		
 		switch (_commands[0])
 		{
 			case "conversation":

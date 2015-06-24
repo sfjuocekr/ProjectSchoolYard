@@ -29,8 +29,6 @@ class StoryContainer
 	
 	public static function setup()
 	{
-		trace(inited);
-		
 		if (!inited)
 		{
 			dbConnection = new Database("stories");

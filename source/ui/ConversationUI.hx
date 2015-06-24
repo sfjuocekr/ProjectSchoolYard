@@ -74,8 +74,6 @@ class ConversationUI extends FlxSpriteGroup
 	
 	public function set(_options:Array<Array<String>>, _story:Int, ?_lastBtn:Int = null)
 	{
-		trace(_options);
-		
 		nameText.text = _options[0].pop();
 		
 		for (_index in 0 ... 3)
@@ -95,6 +93,15 @@ class ConversationUI extends FlxSpriteGroup
 			
 			options[_index].textHighlight.visible = (_index == _lastBtn) ? true : false;
 			options[_index].textNormal.visible = !options[_index].textHighlight.visible;
+		}
+	}
+	
+	public function FUCKMYLIFE()		// I HATE FUCKING HIGHLIGHTS, they need to be visible before being able to change ... FIX: drive into the problem with a semitruck on another day!
+	{
+		for (_ffs in options)
+		{
+			_ffs.textHighlight.visible = false;
+			_ffs.textNormal.visible = true;
 		}
 	}
 	

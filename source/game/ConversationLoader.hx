@@ -32,7 +32,7 @@ class ConversationLoader extends FlxBasic
 	 * @param	_index	story entry point.
 	 * @return			the text to be shown in the dialog.
 	 */
-	public function text(?_index:Int): Array<Array<String>>
+	public function text(?_index:Int = null): Array<Array<String>>
 	{
 		var _return:Array<Array<String>> = new Array<Array<String>>();
 		
