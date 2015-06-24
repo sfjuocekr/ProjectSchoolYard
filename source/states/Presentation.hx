@@ -84,15 +84,6 @@ class Presentation extends FlxState
 				conversation.visible = true;		// see the FUCKMYLIFE function.
 				conversation.FUCKMYLIFE();
 			}
-			
-			case "B":
-			{
-				var _directions = map.getDirections();
-				
-				map.setLocation(_directions[Std.random(_directions.length)]);
-				//trace(_directions);
-				//map.setLocation("N");
-			}
 		}
 	}
 	

@@ -3,6 +3,7 @@ package ui;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxSprite;
 import sys.FileSystem;
+import flixel.addons.ui.FlxButtonPlus;
 
 /**
  * ...
@@ -27,26 +28,28 @@ class MapDisplay extends FlxSpriteGroup
 													[],			[1, 7],								[],
 													[10],		[4, 10],							[10],
 													[10],		[6, 7, 8, 9, 11, 13],				[10],
-													[13],		[12, 14, 15, 16, 17],				[13],
+													[13],		[10, 12, 14, 15, 16, 17],			[13],
 													[13],		[13],								[13]
 												];
-	
-												/*
-														NW	N	NE	
-														W		E
-														SW	S	SE
-												*/
 	
 	private var direction:Array<Array<String>> = [
 													[],			["E", "S"],							["W"],
 													[],			["N", "S"],							[],
 													["SE"],		["N", "S"],							["SW"],
 													["E"],		["NW", "N", "NE", "W", "E", "S"],	["W"],
-													["E"],		["W", "E", "SW", "S", "SE"],		["W"],
+													["E"],		["N", "W", "E", "SW", "S", "SE"],		["W"],
 													["NE"],		["N"],								["NW"]
 												];
 	
-	private var location:Int = 13;
+	private var navDirections:Array<Array<String>> = [
+														["NW",		"N",		"NE"],
+														["W",		null,		"E"],
+														["SW",		"S",		"SE"]
+													];
+	
+	public var navButtons:Array<FlxButtonPlus> = new Array<FlxButtonPlus>();
+	
+	private var location:Int = 10;
 	
 	public function new()
 	{
@@ -62,28 +65,58 @@ class MapDisplay extends FlxSpriteGroup
 			if (_images.indexOf(_index) != -1)
 				if (FileSystem.exists("assets/images/map/" + _index + "/background.png"))
 				{	
-					tiles[_index] = new FlxSprite(0, 0, "assets/images/map/" + _index + "/background.png");
-					
-					tiles[_index].visible = false;
-					
+						tiles[_index] = new FlxSprite(0, 0, "assets/images/map/" + _index + "/background.png");
+						tiles[_index].visible = false;
 					add(tiles[_index]);
 				}
 		
-		setLocation("S");
+		for (_y in 0...navDirections.length)
+			for (_x in 0...navDirections[_y].length)
+				if (navDirections[_y][_x] != null)
+				{
+					navButtons.push(new FlxButtonPlus(_x * 64, _y * 64, setLocation.bind(navDirections[_y][_x]), navDirections[_y][_x], 64, 64));
+					navButtons[navButtons.length - 1].textNormal.size = 32;
+					navButtons[navButtons.length - 1].textHighlight.size = 32;
+					add(navButtons[navButtons.length - 1]);
+				}
+		
+		tiles[location].visible = true;
+		setDirections();
 	}
 	
-	public function setLocation(_location:String)
+	private function setLocation(_location:String)
 	{
-		var _direction = directions[location][direction[location].indexOf(_location)];
+		//trace(_location);
+		var _direction = directions[location][direction[location].indexOf(_location)];		// Yup it does what it says it does ;)
+		//trace(_direction);
 		
 		tiles[location].visible = false;
 		tiles[_direction].visible = true;
 		
 		location = _direction;
+		
+		setDirections();
 	}
 	
-	public function getDirections(): Array<String>
+	private function getDirections(): Array<String>
 	{
 		return direction[location];
+	}
+	
+	private function setDirections()
+	{
+		//trace(direction[location]);
+		
+		for (_button in navButtons)
+		{
+			if (direction[location].indexOf(_button.textNormal.text) != -1)
+			{
+				_button.visible = true;
+			}
+			else
+			{
+				_button.visible = false;
+			}
+		}
 	}
 }
