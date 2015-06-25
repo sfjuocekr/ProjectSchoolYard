@@ -195,7 +195,8 @@ class Gadget extends FlxSpriteGroup
 		//if (callbackOptions[0] == null) callbackOptions[0] = "1";
 		//else callbackOptions[0] = Std.string(Std.parseInt(callbackOptions[0]) + 1);
 		
-		add(notificationSprite);
+		if (members.indexOf(notificationSprite) == -1) add(notificationSprite);
+		
 		notificationSprite.visible = true;
 		
 		

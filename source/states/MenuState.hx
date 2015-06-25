@@ -40,9 +40,9 @@ class MenuState extends FlxState
 		switch (_level)
 		{
 			case "game":				FlxG.switchState(new PlayState());
-			case "help":				FlxG.switchState(null);
+			/*case "help":				FlxG.switchState(null);
 			case "about":				FlxG.switchState(null);
-			case "exit":				Sys.exit(0);
+			case "exit":				Sys.exit(0);*/
 			default: trace("This is not supposed to happen!");
 		}
 	}
