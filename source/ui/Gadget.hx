@@ -105,6 +105,7 @@ class Gadget extends FlxSpriteGroup
 		if (_sprite == backside)
 		{
 			remove(backside);
+			
 			remove(notificationSprite);
 			
 			add(bg);
@@ -117,9 +118,9 @@ class Gadget extends FlxSpriteGroup
 			logo.visible = true;
 			text.visible = false;
 			
-			timer.start();
-			
 			gadgetOpen = true;
+			
+			timer.start();
 		}
 		
 		else
@@ -134,6 +135,9 @@ class Gadget extends FlxSpriteGroup
 			remove(logo);
 			remove(screen);
 			remove(text);
+			
+			logo.visible = true;
+			text.visible = false;
 			
 			gadgetOpen = false;
 		}
@@ -154,18 +158,15 @@ class Gadget extends FlxSpriteGroup
 		{
 			notification = false;
 			textRead = true; //hack
-			
-			logo.visible = false;
-			text.visible = true;
 		}
 		
 		else if (gadgetOpen)
 		{
 			text.text = defaultText;
-			
-			logo.visible = false;
-			text.visible = true;
 		}
+		
+		logo.visible = false;
+		text.visible = true;
 	}
 	
 	private function blink(_event:TimerEvent)
@@ -174,7 +175,6 @@ class Gadget extends FlxSpriteGroup
 		{
 			blinker.reset();
 			remove(notificationSprite);
-			notificationSprite.visible = false;
 		}
 		
 		else if (notification && !gadgetOpen)
@@ -195,10 +195,9 @@ class Gadget extends FlxSpriteGroup
 		//if (callbackOptions[0] == null) callbackOptions[0] = "1";
 		//else callbackOptions[0] = Std.string(Std.parseInt(callbackOptions[0]) + 1);
 		
-		if (members.indexOf(notificationSprite) == -1) add(notificationSprite);
+		add(notificationSprite);
 		
 		notificationSprite.visible = true;
-		
 		
 		blinker.start();
 	}

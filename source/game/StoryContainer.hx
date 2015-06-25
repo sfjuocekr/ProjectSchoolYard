@@ -11,10 +11,10 @@ import game.Database;
 
 class StoryContainer
 {
-	private static var dbConnection:Database;
-	private static var inited:Bool = false;
+	private var dbConnection:Database;
+	//private static var inited:Bool = false;
 	
-	private static var bully:ConversationLoader;
+	private var bully:ConversationLoader;
 	
 	private var callback:Dynamic->Void;
 	
@@ -22,18 +22,22 @@ class StoryContainer
 	{
 		setup();
 		callback = _callback;
+		
+		dbConnection = new Database("stories");
+		
+		bully = new ConversationLoader("bullyDutch");
 	}
 	
 	private function setup()
 	{
-		if (!inited)
+		/*if (!inited)
 		{
 			dbConnection = new Database("stories");
 			
 			bully = new ConversationLoader("bullyDutch");
 			
 			inited = true;
-		}
+		}*/
 	}
 	
 	public function nextPart(_story:String, _part:String)

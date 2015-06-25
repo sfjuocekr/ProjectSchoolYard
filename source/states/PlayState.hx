@@ -53,20 +53,29 @@ class PlayState extends FlxState
 	
 	public function conversationCallback(_options:Array<String>)
 	{
+		trace(_options);
+		
 		//trace(stories.currentText(_options[1])[0][1]);
-		if (stories.currentText(_options[1])[0][1] != "player" || stories.currentText(_options[1])[0][1] != "npc")
-			evaluate(stories.currentText(_options[1]), _options);
+		//if (stories.currentText(_options[1])[0][1] != "player" || stories.currentText(_options[1])[0][1] != "npc")
+			//evaluate(stories.currentText(_options[1]), _options);
 			
 		switch (_options[0])
 		{
 			case "0":
-				FUCKMYLIFE();
+				//trace("0");
+				fml();
 				conversation.set(stories.nextText(_options[1], 1), _options[1]);
-				
-			default:
+			
+			case null:
+				//trace("null");
 				conversation.set(stories.nextText(_options[1], Std.parseInt(_options[0])), _options[1]);
-				evaluate(stories.currentText(_options[1]), _options);
+			
+			default:
+				//trace("default");
+				conversation.set(stories.nextText(_options[1], Std.parseInt(_options[0])), _options[1]);
 		}
+		
+		evaluate(stories.currentText(_options[1]), _options);
 	}
 	
 	private function evaluate(_command:Array<Array<String>>, _options:Array<String>)
@@ -78,8 +87,7 @@ class PlayState extends FlxState
 			default: trace(_command);
 			
 			case "conversation":
-				FUCKMYLIFE();
-				//trace(_command[0][2]);
+				fml();
 				stories.nextPart(_options[1], _command[0][2]);
 				evaluate(stories.nextText(_options[1], 1), [null, _options[1]]);
 			
@@ -89,20 +97,27 @@ class PlayState extends FlxState
 		}
 	}
 	
-	private function FUCKMYLIFE()
+	private function fml()
 	{
 		remove(conversation);
 		conversation.destroy();
 		conversation = new ConversationUI(conversationCallback);
 	}
 	
+	/*private function FUCKMYLIFE()
+	{
+		remove(conversation);
+		conversation.destroy();
+		conversation = new ConversationUI(conversationCallback);
+	}*/
+	
 	private function actions(_action:String)
 	{
 		switch(_action)
 		{
 			case "A":
-				trace(stories.currentText("bully")[0][1]);
-				if (stories.currentText("bully")[0][1] != "player" || stories.currentText("bully")[0][1] == "npc")
+				//trace(stories.currentText("bully")[0][1]);
+				if (stories.currentText("bully")[0][1] != "player")// || stories.currentText("bully")[0][1] == "npc")
 					conversation.set([["0", "player", "Ik heb niets te vertellen", "player"]], "bully");
 				add(conversation);
 				

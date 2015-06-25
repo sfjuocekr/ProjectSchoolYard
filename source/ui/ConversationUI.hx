@@ -77,19 +77,30 @@ class ConversationUI extends FlxSpriteGroup
 	
 	public function set(_text:Array<Array<String>>, _story:String)
 	{
+		//trace(members.length);
 		nameText.text = _text[0][3];
+		
 		for (_option in options)
-			remove(_option);
+		{
+			//trace("remove: " + cast(_option, FlxButtonPlus));
+			cast(_option, FlxButtonPlus).onClickCallback = null;
+			remove(cast(_option, FlxButtonPlus), true);
+		}
 		
 		for (_index in 0 ... 3)
 		{
 			if (_index < _text.length)
 			{
 					options[_index].text = _text[_index][2];
-					options[_index].onClickCallback = callback.bind([_text[_index][0], _story]);
-				add(options[_index]);
+					options[_index].onClickCallback = callback.bind([_text[_index][0], _story, _index]);
+				//add(options[_index]);
+				
+				add(cast(options[_index], FlxButtonPlus));
 			}
 		}
+		
+		//for (_member in members)
+		//	trace(_member);
 	}
 	
 	/**
