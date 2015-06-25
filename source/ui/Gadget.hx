@@ -126,6 +126,8 @@ class Gadget extends FlxSpriteGroup
 		{
 			add(backside);
 			
+			if (notification) add(notificationSprite);
+			
 			remove(bg);
 			remove(edge);
 			remove(background);
@@ -172,6 +174,7 @@ class Gadget extends FlxSpriteGroup
 		{
 			blinker.reset();
 			remove(notificationSprite);
+			notificationSprite.visible = false;
 		}
 		
 		else if (notification && !gadgetOpen)

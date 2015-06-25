@@ -19,7 +19,7 @@ class PlayState extends FlxState
 {
 	private var map:MapDisplay;
 	private var gadget:Gadget;
-	private var actionBar:ActionBar;
+	//private var actionBar:ActionBar;
 	private var conversation:ConversationUI;
 	
 	private var stories:StoryContainer;
@@ -31,15 +31,15 @@ class PlayState extends FlxState
 	{
 		super.create();
 		
-		map = new MapDisplay();
-		actionBar = new ActionBar(actions);
+		map = new MapDisplay(actions);
+		//actionBar = new ActionBar(actions);
 		gadget = new Gadget();
 		
 		stories = new StoryContainer(storyCallback);
 		conversation = new ConversationUI(conversationCallback);
 		
 		add(map);
-		add(actionBar);
+		//add(actionBar);
 		add(gadget);
 		
 		// hacks
@@ -54,22 +54,24 @@ class PlayState extends FlxState
 	public function conversationCallback(_options:Array<String>)
 	{
 		//trace(stories.currentText(_options[1])[0][1]);
-		//if (stories.currentText(_options[1])[0][1] == "player" || stories.currentText(_options[1])[0][1] == "npc")
-			switch (_options[0])
-			{
-				case "0":
-					FUCKMYLIFE();
-					conversation.set(stories.nextText(_options[1], 1), _options[1]);
-					
-				default:
-					conversation.set(stories.nextText(_options[1], Std.parseInt(_options[0])), _options[1]);
-					evaluate(stories.currentText(_options[1]), _options);
-			}
+		if (stories.currentText(_options[1])[0][1] != "player" || stories.currentText(_options[1])[0][1] != "npc")
+			evaluate(stories.currentText(_options[1]), _options);
+			
+		switch (_options[0])
+		{
+			case "0":
+				FUCKMYLIFE();
+				conversation.set(stories.nextText(_options[1], 1), _options[1]);
+				
+			default:
+				conversation.set(stories.nextText(_options[1], Std.parseInt(_options[0])), _options[1]);
+				evaluate(stories.currentText(_options[1]), _options);
+		}
 	}
 	
 	private function evaluate(_command:Array<Array<String>>, _options:Array<String>)
 	{
-		trace(_command + " " + _options);
+		//trace(_command + " " + _options);
 		
 		switch (_command[0][1].toLowerCase())
 		{
@@ -77,12 +79,12 @@ class PlayState extends FlxState
 			
 			case "conversation":
 				FUCKMYLIFE();
-				trace(_command[0][2]);
+				//trace(_command[0][2]);
 				stories.nextPart(_options[1], _command[0][2]);
 				evaluate(stories.nextText(_options[1], 1), [null, _options[1]]);
 			
 			case "gadget":
-				trace(_command + " " + _options);
+				//trace(_command + " " + _options);
 				gadget.addNotification(_command[0][2], conversationCallback, [_command[0][0], _options[1]]);
 		}
 	}
@@ -99,6 +101,9 @@ class PlayState extends FlxState
 		switch(_action)
 		{
 			case "A":
+				trace(stories.currentText("bully")[0][1]);
+				if (stories.currentText("bully")[0][1] != "player")
+					conversation.set([["0", "player", "Ik heb niets te vertellen", "player"]], "bully");
 				add(conversation);
 				
 			case "B": trace("B");
@@ -115,8 +120,8 @@ class PlayState extends FlxState
 	{
 		super.update();
 		
-		if (gadget.gadgetOpen && members.indexOf(actionBar) != -1) remove(actionBar);
-		else if (!gadget.gadgetOpen && members.indexOf(actionBar) == -1) add(actionBar);
+		//if (gadget.gadgetOpen && members.indexOf(actionBar) != -1) remove(actionBar);
+		//else if (!gadget.gadgetOpen && members.indexOf(actionBar) == -1) add(actionBar);
 		
 		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
 	}
@@ -127,5 +132,10 @@ class PlayState extends FlxState
 	override public function destroy()
 	{
 		super.destroy();
+		
+		map = null;
+		gadget = null;
+		conversation = null;
+		stories = null;
 	}
 }

@@ -44,10 +44,10 @@ class MainMenu extends FlxSpriteGroup
 		buttons.x = bgSprite.x;
 		buttons.y = bgSprite.y;
 		
-		buttons.add(new FlxButtonPlus(32,  32 + (buttons.length * 32), _func.bind("game" ), "game",  256, 64));
-		buttons.add(new FlxButtonPlus(32,  96 + (buttons.length * 32), _func.bind("help" ), "help",  256, 64));
-		buttons.add(new FlxButtonPlus(32, 160 + (buttons.length * 32), _func.bind("about"), "about", 256, 64));
-		buttons.add(new FlxButtonPlus(32, 256 + (buttons.length * 32), _func.bind("exit" ), "exit",  256, 64));
+		buttons.add(new FlxButtonPlus(32,  32 + (buttons.length * 32), _func.bind("game" ), "Speel",  256, 64));
+		buttons.add(new FlxButtonPlus(32,  96 + (buttons.length * 32), _func.bind("help" ), "Help",  256, 64));
+		buttons.add(new FlxButtonPlus(32, 160 + (buttons.length * 32), _func.bind("about"), "KJRW", 256, 64));
+		buttons.add(new FlxButtonPlus(32, 256 + (buttons.length * 32), _func.bind("exit" ), "Sluit",  256, 64));
 		
 		for (_button in buttons.members)
 		{

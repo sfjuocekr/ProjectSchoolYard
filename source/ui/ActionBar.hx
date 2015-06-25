@@ -44,7 +44,7 @@ class ActionBar extends FlxSpriteGroup
 		buttons.x = bgSprite.x;
 		buttons.y = bgSprite.y;
 		
-		buttons.add(new FlxButtonPlus(32,	32,	_func.bind("A"), "A", 160, 64));
+		buttons.add(new FlxButtonPlus(32,	32,	_func.bind("A"), "Bully", 160, 64));
 		buttons.add(new FlxButtonPlus(224,	32,	_func.bind("B"), "B", 160, 64));
 		buttons.add(new FlxButtonPlus(416,	32,	_func.bind("C"), "C", 160, 64));
 		buttons.add(new FlxButtonPlus(608,	32,	_func.bind("D"), "D", 160, 64));

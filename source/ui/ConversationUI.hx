@@ -14,7 +14,8 @@ import flixel.addons.ui.FlxUIText;
 class ConversationUI extends FlxSpriteGroup
 {
 	private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/scenes/home/Street.png");
-	private var character:FlxSprite = new FlxSprite(0, 0, "assets/images/characters/SoccerGirl.png");
+	//private var character:FlxSprite = new FlxSprite(0, 0, "assets/images/characters/SoccerGirl.png");
+	private var character:FlxSprite;
 	private var bgText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgBig.png");
 	private var bgNameText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgName.png");
 	private var nameText:FlxText;
@@ -27,6 +28,9 @@ class ConversationUI extends FlxSpriteGroup
 		super();
 		
 		callback = _callback;
+		
+		if (Std.random(2) == 1) character = new FlxSprite(0, 0, "assets/images/characters/char2_1.png");
+		else character = new FlxSprite(0, 0, "assets/images/characters/char2_2.png");
 		
 		add(scene);
 		add_character();

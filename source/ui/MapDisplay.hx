@@ -2,8 +2,11 @@ package ui;
 
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxSprite;
+import flixel.ui.FlxButton;
 import sys.FileSystem;
 import flixel.addons.ui.FlxButtonPlus;
+import flixel.plugin.MouseEventManager;
+import flixel.FlxG;
 
 /**
  * ...
@@ -51,7 +54,10 @@ class MapDisplay extends FlxSpriteGroup
 	
 	private var location:Int = 10;
 	
-	public function new()
+	private var character:FlxButtonPlus;
+	private var charSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/map/15/character.png");
+	
+	public function new(_callback:Dynamic->Void)
 	{
 		super();
 		
@@ -74,7 +80,7 @@ class MapDisplay extends FlxSpriteGroup
 			for (_x in 0...navDirections[_y].length)
 				if (navDirections[_y][_x] != null)
 				{
-					navButtons.push(new FlxButtonPlus(_x * 64, _y * 64, setLocation.bind(navDirections[_y][_x]), navDirections[_y][_x], 64, 64));
+					navButtons.push(new FlxButtonPlus(FlxG.width * 0.5 - 64 + _x * 64, FlxG.height * 0.5 + 256 + _y * 64, setLocation.bind(navDirections[_y][_x]), navDirections[_y][_x], 64, 64));
 					navButtons[navButtons.length - 1].textNormal.size = 32;
 					navButtons[navButtons.length - 1].textHighlight.size = 32;
 					add(navButtons[navButtons.length - 1]);
@@ -82,6 +88,10 @@ class MapDisplay extends FlxSpriteGroup
 		
 		tiles[location].visible = true;
 		setDirections();
+		
+		// dis hacking
+		character = new FlxButtonPlus(1200, 320, _callback.bind("A"), null, 250, 500);
+		character.loadButtonGraphic(charSprite, charSprite);
 	}
 	
 	private function setLocation(_location:String)
@@ -94,6 +104,9 @@ class MapDisplay extends FlxSpriteGroup
 		tiles[_direction].visible = true;
 		
 		location = _direction;
+		
+		if (location == 15) add(character);
+		else remove(character);
 		
 		setDirections();
 	}
