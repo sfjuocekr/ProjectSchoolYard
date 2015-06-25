@@ -11,11 +11,11 @@ import flixel.addons.ui.FlxButtonPlus;
 
 class MainMenu extends FlxSpriteGroup
 {
-	private var bgSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/Background.png");
+	private var bgSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/menubg.png");
 	private var buttons:FlxSpriteGroup = new FlxSpriteGroup();
 	
-	private var normalButton:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/ButtonNormal.png");
-	private var highlightButton:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/ButtonHighlight.png");
+	//private var normalButton:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/ButtonNormal.png");
+	//private var highlightButton:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/ButtonHighlight.png");
 	
 	public function new(_func:Dynamic->Void)
 	{
@@ -44,12 +44,12 @@ class MainMenu extends FlxSpriteGroup
 		buttons.x = bgSprite.x;
 		buttons.y = bgSprite.y;
 		
-		buttons.add(new FlxButtonPlus(32,  32 + (buttons.length * 32), _func.bind("game" ), "Speel",  256, 64));
-		buttons.add(new FlxButtonPlus(32,  96 + (buttons.length * 32), _func.bind("help" ), "Help",  256, 64));
-		buttons.add(new FlxButtonPlus(32, 160 + (buttons.length * 32), _func.bind("about"), "KJRW", 256, 64));
-		buttons.add(new FlxButtonPlus(32, 256 + (buttons.length * 32), _func.bind("exit" ), "Sluit",  256, 64));
+		buttons.add(new FlxButtonPlus(96,  32 + 96 + (buttons.length * 32), _func.bind("game" ), null,  256, 128));
+		buttons.add(new FlxButtonPlus(96,  96 + 96 + (buttons.length * 32), _func.bind("help" ), null,  256, 128));
+		buttons.add(new FlxButtonPlus(96, 160 + 96 + (buttons.length * 32), _func.bind("about"), null,  256, 128));
+		buttons.add(new FlxButtonPlus(96, 256 + 96 + (buttons.length * 32), _func.bind("exit" ), null,  256, 128));
 		
-		for (_button in buttons.members)
+		/*for (_button in buttons.members)
 		{
 			cast(_button, FlxButtonPlus).textNormal.size = 32;
 			cast(_button, FlxButtonPlus).textHighlight.size = 32;
@@ -58,7 +58,12 @@ class MainMenu extends FlxSpriteGroup
 			cast(_button, FlxButtonPlus).textHighlight.y += 8;
 			
 			cast(_button, FlxButtonPlus).loadButtonGraphic(normalButton, highlightButton);
-		}
+		}*/
+		
+		cast(buttons.members[0], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text1.png"), new FlxSprite(0, 0, "assets/images/menu/text1highlight.png"));
+		cast(buttons.members[1], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text2.png"), new FlxSprite(0, 0, "assets/images/menu/text2highlight.png"));
+		cast(buttons.members[2], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text3.png"), new FlxSprite(0, 0, "assets/images/menu/text3highlight.png"));
+		cast(buttons.members[3], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text4.png"), new FlxSprite(0, 0, "assets/images/menu/text4highlight.png"));
 		
 		add(buttons);
 	}
@@ -71,8 +76,8 @@ class MainMenu extends FlxSpriteGroup
 		super.destroy();
 		
 		bgSprite = null;
-		normalButton = null;
-		highlightButton = null;
+		//normalButton = null;
+		//highlightButton = null;
 		buttons = null;
 	}
 }

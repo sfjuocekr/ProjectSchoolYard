@@ -13,7 +13,8 @@ import flixel.addons.ui.FlxUIText;
 
 class ConversationUI extends FlxSpriteGroup
 {
-	private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/scenes/home/Street.png");
+	//private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/scenes/home/Street.png");
+	private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/map/15/background.png");
 	//private var character:FlxSprite = new FlxSprite(0, 0, "assets/images/characters/SoccerGirl.png");
 	private var character:FlxSprite;
 	private var bgText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgBig.png");

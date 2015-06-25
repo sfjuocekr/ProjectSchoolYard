@@ -186,6 +186,7 @@ class Gadget extends FlxSpriteGroup
 	public function addNotification(_text:String, _callback:Dynamic->Void, _options:Array<String>)
 	{
 		trace(_options);
+		notification = true;
 		
 		text.text = _text;
 		callback = _callback;
@@ -195,8 +196,8 @@ class Gadget extends FlxSpriteGroup
 		//else callbackOptions[0] = Std.string(Std.parseInt(callbackOptions[0]) + 1);
 		
 		add(notificationSprite);
+		notificationSprite.visible = true;
 		
-		notification = true;
 		
 		blinker.start();
 	}
@@ -207,6 +208,9 @@ class Gadget extends FlxSpriteGroup
 	override public function destroy()
 	{
 		super.destroy();
+		
+		MouseEventManager.remove(backside);
+		MouseEventManager.remove(screen);
 		
 		screen = null;
 		logo = null;

@@ -102,7 +102,7 @@ class PlayState extends FlxState
 		{
 			case "A":
 				trace(stories.currentText("bully")[0][1]);
-				if (stories.currentText("bully")[0][1] != "player")
+				if (stories.currentText("bully")[0][1] != "player" || stories.currentText("bully")[0][1] == "npc")
 					conversation.set([["0", "player", "Ik heb niets te vertellen", "player"]], "bully");
 				add(conversation);
 				
