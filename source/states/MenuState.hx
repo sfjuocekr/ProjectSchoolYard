@@ -10,13 +10,12 @@ import flixel.input.keyboard.FlxKeyList;
 import neko.vm.Ui;
 import ui.Gadget;
 import ui.MainMenu;
-import ui.MenuClass;
 
 /**
  * @author Sjoer van der Ploeg
  */
 
-class MainMenuState extends FlxState
+class MenuState extends FlxState
 {
 	private var mainMenu:MainMenu;
 	
@@ -40,7 +39,7 @@ class MainMenuState extends FlxState
 	{
 		switch (_level)
 		{
-			case "game":				FlxG.switchState(new Presentation());
+			case "game":				FlxG.switchState(new PlayState());
 			case "help":				FlxG.switchState(null);
 			case "about":				FlxG.switchState(null);
 			case "exit":				Sys.exit(0);

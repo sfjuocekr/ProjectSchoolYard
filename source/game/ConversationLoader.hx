@@ -9,21 +9,40 @@ import flixel.FlxBasic;
 class ConversationLoader extends FlxBasic
 {
 	private var dbConnection:Database;
+	
 	private var conversation:Array<Array<String>> = new Array<Array<String>>();
+	private var parts:Array<String> = new Array<String>();
+	
+	private var part:Int = 0;
 	private var index:Int = 0;
+	
+	public var current:Array<Array<String>>;
 	
 	/**
 	 * Creates a new conversation.
 	 * 
-	 * @param _sqlite	the database to connect to.
-	 * @param _story	the story table to retreive.
+	 * @param _story	the story to retreive.
+	 * @param _part		the part to start from.
 	 */
-	public function new(_story:String)
+	public function new(_story:String, ?_part:Int = 0)
 	{
 		super();
 		
 		dbConnection = new Database();
-		conversation = dbConnection.readStory(_story);
+		
+		part = _part;
+		
+		parts = dbConnection.readCaseParts(_story);
+		conversation = dbConnection.readStory(parts[part]);
+	}
+	
+	public function nextPart(_part:String)
+	{
+		part = parts.indexOf(_part);
+		trace(part);
+		index = 0;
+		
+		conversation = dbConnection.readStory(parts[part]);
 	}
 	
 	/**
@@ -34,6 +53,7 @@ class ConversationLoader extends FlxBasic
 	 */
 	public function text(?_index:Int = null): Array<Array<String>>
 	{
+		//trace(_index);
 		var _return:Array<Array<String>> = new Array<Array<String>>();
 		
 		if (_index == 0)
@@ -53,12 +73,12 @@ class ConversationLoader extends FlxBasic
 			next(_return);
 			
 			_return[0][0] = "exit";
-			
+			trace("HALP");
 			return _return;
 		}
 		
 		if (conversation[index][1] != "null") while (conversation[index][1] != "null") next(_return);
-		else next(_return);	
+		else next(_return);
 		
 		return _return;
 	}

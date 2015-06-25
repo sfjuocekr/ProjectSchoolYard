@@ -20,13 +20,13 @@ class ConversationUI extends FlxSpriteGroup
 	private var nameText:FlxText;
 	private var options:Array<FlxButtonPlus> = new Array<FlxButtonPlus>();
 	
-	private var optionCallback:Dynamic->Void;
+	private var callback:Dynamic->Void;
 	
 	public function new(_callback:Dynamic->Void)
 	{
 		super();
 		
-		optionCallback = _callback;
+		callback = _callback;
 		
 		add(scene);
 		add_character();
@@ -67,41 +67,23 @@ class ConversationUI extends FlxSpriteGroup
 			
 			options[_index].textHighlight = new FlxText(bgText.x + 32, bgText.y + 16 + (_index * 56), bgText.width - 64, null, 20, true);
 			options[_index].textHighlight.color = 0xFFFFFF;
-			
-			add(options[_index]);
 		}
 	}
 	
-	public function set(_options:Array<Array<String>>, _story:Int, ?_lastBtn:Int = null)
+	public function set(_text:Array<Array<String>>, _story:String)
 	{
-		nameText.text = _options[0].pop();
+		nameText.text = _text[0][3];
+		for (_option in options)
+			remove(_option);
 		
 		for (_index in 0 ... 3)
 		{
-			if (_index < _options.length)
+			if (_index < _text.length)
 			{
-				options[_index].text = _options[_index][2];
-				options[_index].onClickCallback = optionCallback.bind([Std.parseInt(_options[_index][0]), _story, _index]);
-				options[_index].visible = true;
+					options[_index].text = _text[_index][2];
+					options[_index].onClickCallback = callback.bind([_text[_index][0], _story]);
+				add(options[_index]);
 			}
-			
-			else
-			{
-				options[_index].text = null;
-				options[_index].visible = false;
-			}
-			
-			options[_index].textHighlight.visible = (_index == _lastBtn) ? true : false;
-			options[_index].textNormal.visible = !options[_index].textHighlight.visible;
-		}
-	}
-	
-	public function FUCKMYLIFE()		// I HATE FUCKING HIGHLIGHTS, they need to be visible before being able to change ... FIX: drive into the problem with a semitruck on another day!
-	{
-		for (_ffs in options)
-		{
-			_ffs.textHighlight.visible = false;
-			_ffs.textNormal.visible = true;
 		}
 	}
 	
@@ -116,7 +98,8 @@ class ConversationUI extends FlxSpriteGroup
 		character = null;
 		bgText = null;
 		bgNameText = null;
+		nameText = null;
 		options = null;
-		optionCallback = null;
+		callback = null;
 	}
 }

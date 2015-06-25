@@ -26,7 +26,7 @@ class MapDisplay extends FlxSpriteGroup
 	private var directions:Array<Array<Int>> = [
 													[],			[2, 4],								[1],
 													[],			[1, 7],								[],
-													[10],		[4, 10],							[10],
+													[10],		[10],								[10],
 													[10],		[6, 7, 8, 9, 11, 13],				[10],
 													[13],		[10, 12, 14, 15, 16, 17],			[13],
 													[13],		[13],								[13]
@@ -35,9 +35,9 @@ class MapDisplay extends FlxSpriteGroup
 	private var direction:Array<Array<String>> = [
 													[],			["E", "S"],							["W"],
 													[],			["N", "S"],							[],
-													["SE"],		["N", "S"],							["SW"],
+													["SE"],		["S"],								["SW"],
 													["E"],		["NW", "N", "NE", "W", "E", "S"],	["W"],
-													["E"],		["N", "W", "E", "SW", "S", "SE"],		["W"],
+													["E"],		["N", "W", "E", "SW", "S", "SE"],	["W"],
 													["NE"],		["N"],								["NW"]
 												];
 	
