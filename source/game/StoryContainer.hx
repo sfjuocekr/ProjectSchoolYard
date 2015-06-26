@@ -6,38 +6,29 @@ import game.Database;
 /**
  * @author Sjoer van der Ploeg
  * 
- * Static container for conversation states.
+ * Static container for conversations.
  */
 
 class StoryContainer
 {
-	private var dbConnection:Database;
-	//private static var inited:Bool = false;
+	private static var dbConnection:Database;
+	private static var bully:ConversationLoader;
 	
-	private var bully:ConversationLoader;
+	private static var inited:Bool = false;
 	
-	private var callback:Dynamic->Void;
-	
-	public function new(_callback:Dynamic->Void)
+	/**
+	 * Setup the singleton.
+	 */
+	public function new()
 	{
-		setup();
-		callback = _callback;
-		
-		dbConnection = new Database("stories");
-		
-		bully = new ConversationLoader("bullyDutch");
-	}
-	
-	private function setup()
-	{
-		/*if (!inited)
+		if (!inited)
 		{
 			dbConnection = new Database("stories");
 			
 			bully = new ConversationLoader("bullyDutch");
 			
 			inited = true;
-		}*/
+		}
 	}
 	
 	public function nextPart(_story:String, _part:String)
@@ -53,7 +44,8 @@ class StoryContainer
 		switch (_story)
 		{
 			case "bully":
-				bully.current = bully.text(_index);
+				bully.text(_index);
+				
 				return bully.current;
 			
 			default: return null;

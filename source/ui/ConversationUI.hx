@@ -9,42 +9,60 @@ import flixel.addons.ui.FlxUIText;
 
 /**
  * @author Sjoer van der Ploeg
+ * 
+ * The conversation interface.
  */
 
 class ConversationUI extends FlxSpriteGroup
 {
-	//private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/scenes/home/Street.png");
-	private var scene:FlxSprite = new FlxSprite(0, 0, "assets/images/map/15/background.png");
-	//private var character:FlxSprite = new FlxSprite(0, 0, "assets/images/characters/SoccerGirl.png");
-	private var character:FlxSprite;
+	private var scene:FlxSprite = new FlxSprite(0, 0);
+	private var character:FlxSprite = new FlxSprite(0, 0);
 	private var bgText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgBig.png");
 	private var bgNameText:FlxSprite = new FlxSprite(0, 0, "assets/images/conversation/bgName.png");
+	
 	private var nameText:FlxText;
+	
 	private var options:Array<FlxButtonPlus> = new Array<FlxButtonPlus>();
 	
 	private var callback:Dynamic->Void;
 	
+	/**
+	 * Creates a new conversation interface.
+	 * 
+	 * @param	_callback	function to call when clicking options.
+	 */
 	public function new(_callback:Dynamic->Void)
 	{
 		super();
 		
 		callback = _callback;
 		
-		if (Std.random(2) == 1) character = new FlxSprite(0, 0, "assets/images/characters/char2_1.png");
-		else character = new FlxSprite(0, 0, "assets/images/characters/char2_2.png");
-		
 		add(scene);
+		
 		add_character();
 		add_textFields();
 	}
 	
+	/**
+	 * Adds the character to the conversatiob.
+	 * 
+	 * @param	_story		name of the story.
+	 */
 	private function add_character()
 	{
+		if (Std.random(2) == 1) 
+			character = new FlxSprite(0, 0, "assets/images/characters/char2_1.png");
+		else
+			character = new FlxSprite(0, 0, "assets/images/characters/char2_2.png");
+		
 			character.x = FlxG.width - character.width;
 			character.y = FlxG.height - character.height;
 		add(character);
 	}
 	
+	/**
+	 * Adds the fields containing text to the conversation including their backgrounds.
+	 */
 	private function add_textFields()
 	{
 			bgText.x = 96;
@@ -75,32 +93,41 @@ class ConversationUI extends FlxSpriteGroup
 		}
 	}
 	
-	public function set(_text:Array<Array<String>>, _story:String)
+	/**
+	 * Sets the available options to click in the conversation and updates the background image.
+	 * 
+	 * @param	_text		array with options to pick from.
+	 * @param	_story		name of the story.
+	 * @param	_zone		the zone where the conversation takes place.
+	 */
+	public function set(_text:Array<Array<String>>, _story:String, _zone:Int)
 	{
-		//trace(members.length);
+		scene.loadGraphic("assets/images/map/" + _zone + "/background.png");
+		
 		nameText.text = _text[0][3];
 		
+		removeButtons();
+		
+		for (_index in 0 ... _text.length)
+		{
+				options[_index].text = _text[_index][2];
+				options[_index].onClickCallback = callback.bind([_text[_index][0], _story]);
+			add(options[_index]);
+		}
+	}
+	
+	/**
+	 * Part of the ANTI-FML.
+	 * 
+	 * Will clear the onClickCallback and remove the button from this group.
+	 */
+	public function removeButtons()
+	{
 		for (_option in options)
 		{
-			//trace("remove: " + cast(_option, FlxButtonPlus));
-			cast(_option, FlxButtonPlus).onClickCallback = null;
-			remove(cast(_option, FlxButtonPlus), true);
+			_option.onClickCallback = null;
+			remove(_option);
 		}
-		
-		for (_index in 0 ... 3)
-		{
-			if (_index < _text.length)
-			{
-					options[_index].text = _text[_index][2];
-					options[_index].onClickCallback = callback.bind([_text[_index][0], _story, _index]);
-				//add(options[_index]);
-				
-				add(cast(options[_index], FlxButtonPlus));
-			}
-		}
-		
-		//for (_member in members)
-		//	trace(_member);
 	}
 	
 	/**

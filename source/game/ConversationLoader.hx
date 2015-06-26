@@ -4,6 +4,8 @@ import flixel.FlxBasic;
 
 /**
  * @author Sjoer van der Ploeg
+ * 
+ * A simple conversation loader, it will read the conversation parts from the database and load them when requested.
  */
 
 class ConversationLoader extends FlxBasic
@@ -11,10 +13,10 @@ class ConversationLoader extends FlxBasic
 	private var dbConnection:Database;
 	
 	private var conversation:Array<Array<String>> = new Array<Array<String>>();
-	private var parts:Array<String> = new Array<String>();
-	
-	private var part:Int = 0;
 	private var index:Int = 0;
+	
+	private var parts:Array<String> = new Array<String>();
+	private var part:Int = 0;
 	
 	public var current:Array<Array<String>>;
 	
@@ -22,78 +24,68 @@ class ConversationLoader extends FlxBasic
 	 * Creates a new conversation.
 	 * 
 	 * @param _story	the story to retreive.
-	 * @param _part		the part to start from.
+	 * @param _part		the part of the conversation to start from.
 	 */
-	public function new(_story:String, ?_part:Int = 0)
+	public function new(_story:String, ?_part:String = null)
 	{
 		super();
 		
 		dbConnection = new Database();
 		
-		part = _part;
-		
 		parts = dbConnection.readCaseParts(_story);
+		
+		part = (_part == null) ? 0 : parts.indexOf(_part);
+		
 		conversation = dbConnection.readStory(parts[part]);
 	}
 	
+	/**
+	 * Selects the requested part of the story to load.
+	 * 
+	 * @param	_part	the part of the conversation to load.
+	 */
 	public function nextPart(_part:String)
 	{
 		part = parts.indexOf(_part);
-		trace(part);
+		
 		index = 0;
 		
 		conversation = dbConnection.readStory(parts[part]);
 	}
 	
 	/**
-	 * Returns the text for the current or entry point dialog.
+	 * Sets the text for the requested dialog.
 	 * 
 	 * @param	_index	story entry point.
 	 * @return			the text to be shown in the dialog.
 	 */
-	public function text(?_index:Int = null): Array<Array<String>>
+	public function text(?_index:Int = null)
 	{
-		//trace(_index);
-		var _return:Array<Array<String>> = new Array<Array<String>>();
+		current = new Array<Array<String>>();
 		
 		if (_index == 0)
-		{
-			_return.push(["exit"]);
-			
-			return _return;
-		}
-		
+			current.push(["exit"]);
 		else if (_index != null)
-		{
 			index = _index - 1;
-		}
 		
-		if (conversation[index][1] == "-1")
-		{
-			next(_return);
-			
-			_return[0][0] = "exit";
-			trace("HALP");
-			return _return;
-		}
-		
-		if (conversation[index][1] != "null") while (conversation[index][1] != "null") next(_return);
-		else next(_return);
-		
-		return _return;
+		// makes an array with options
+		if (conversation[index][1] != "null")
+			while (conversation[index][1] != "null")
+				next(current);
+		else
+			next(current);
 	}
 	
 	/**
-	 * Progress to the next dialog or set an entry point.
+	 * Progress to the next dialog in the conversation.
 	 * 
-	 * @param _index	story entry point.
+	 * @param	_text		the array to put the conversation into.
 	 */
-	private function next(_text:Array<Dynamic> , ?_index:Int)
+	private function next(_text:Array<Dynamic>)
 	{
 		_text.push(parse(conversation[index]));
 		
-		if (_index != null) index = _index;
-		else index++;
+		index++;
 	}
 	
 	/**
@@ -123,5 +115,8 @@ class ConversationLoader extends FlxBasic
 		dbConnection = null;
 		conversation = null;
 		index = null;
+		parts = null;
+		part = null;
+		current = null;
 	}
 }

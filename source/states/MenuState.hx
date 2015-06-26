@@ -1,18 +1,13 @@
 package states;
 
-import flixel.addons.ui.FlxButtonPlus;
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.group.FlxSpriteGroup;
-import flixel.input.keyboard.FlxKey;
-import flixel.input.keyboard.FlxKeyList;
-import neko.vm.Ui;
-import ui.Gadget;
 import ui.MainMenu;
 
 /**
  * @author Sjoer van der Ploeg
+ * 
+ * The default main menu.
  */
 
 class MenuState extends FlxState
@@ -22,7 +17,7 @@ class MenuState extends FlxState
 	/**
 	 * Create the main menu.
 	 */
-	override public function create(): Void
+	override public function create()
 	{
 		super.create();
 		
@@ -41,8 +36,8 @@ class MenuState extends FlxState
 		{
 			case "game":				FlxG.switchState(new PlayState());
 			/*case "help":				FlxG.switchState(null);
-			case "about":				FlxG.switchState(null);
-			case "exit":				Sys.exit(0);*/
+			case "about":				FlxG.switchState(null);*/
+			case "exit":				Sys.exit(0);
 			default: trace("This is not supposed to happen!");
 		}
 	}
@@ -54,7 +49,6 @@ class MenuState extends FlxState
 	{
 		super.update();
 		
-		//if (FlxG.keys.anyJustPressed(["ESCAPE"])) Sys.exit(0);
 		if (FlxG.keys.justPressed.ESCAPE) Sys.exit(0);
 	}
 	

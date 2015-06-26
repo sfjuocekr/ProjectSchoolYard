@@ -2,129 +2,142 @@ package states;
 
 import flixel.FlxG;
 import flixel.FlxState;
-import game.ConversationLoader;
 import game.StoryContainer;
-import ui.MapDisplay;
+#if !FLX_NO_DEBUG
 import ui.ActionBar;
+#end
 import ui.ConversationUI;
 import ui.Gadget;
+import ui.MapDisplay;
 
 /**
  * @author Sjoer van der Ploeg
  * 
- * PlayState for the presentation
+ * PlayState for the game presentation.
  */
 
 class PlayState extends FlxState
 {
 	private var map:MapDisplay;
 	private var gadget:Gadget;
-	//private var actionBar:ActionBar;
-	private var conversation:ConversationUI;
 	
+	#if !FLX_NO_DEBUG
+	private var actionBar:ActionBar;
+	#end
+
+	private var conversation:ConversationUI;
 	private var stories:StoryContainer;
 	
 	/**
-	 * Create this state.
+	 * Start the game.
 	 */
 	override public function create()
 	{
 		super.create();
 		
 		map = new MapDisplay(actions);
-		//actionBar = new ActionBar(actions);
-		gadget = new Gadget();
 		
-		stories = new StoryContainer(storyCallback);
-		conversation = new ConversationUI(conversationCallback);
+		#if !FLX_NO_DEBUG
+		actionBar = new ActionBar(actions);
+		#end
+		
+		gadget = new Gadget();
+		stories = new StoryContainer();
 		
 		add(map);
-		//add(actionBar);
-		add(gadget);
 		
-		// hacks
-		conversation.set(stories.nextText("bully", 1), "bully");
+		#if !FLX_NO_DEBUG
+		add(actionBar);
+		#end
+		
+		add(gadget);
 	}
 	
-	public function storyCallback(_options:Array<String>)
-	{
-		//trace(_options);
-	}
-	
+	/**
+	 * Callback function for the conversation to influence the gameworld.
+	 * 
+	 * @param	_options	array containing the goto index for the conversation and the name of the story.
+	 */
 	public function conversationCallback(_options:Array<String>)
 	{
-		trace(_options);
-		
-		//trace(stories.currentText(_options[1])[0][1]);
-		//if (stories.currentText(_options[1])[0][1] != "player" || stories.currentText(_options[1])[0][1] != "npc")
-			//evaluate(stories.currentText(_options[1]), _options);
-			
 		switch (_options[0])
 		{
 			case "0":
-				//trace("0");
 				fml();
-				conversation.set(stories.nextText(_options[1], 1), _options[1]);
-			
-			case null:
-				//trace("null");
-				conversation.set(stories.nextText(_options[1], Std.parseInt(_options[0])), _options[1]);
+				stories.nextText(_options[1], 1);
 			
 			default:
-				//trace("default");
-				conversation.set(stories.nextText(_options[1], Std.parseInt(_options[0])), _options[1]);
+				stories.nextText(_options[1], Std.parseInt(_options[0]));
 		}
 		
 		evaluate(stories.currentText(_options[1]), _options);
 	}
 	
+	/**
+	 * Evaluation function to perform actions based on the storyline.
+	 * 
+	 * @param	_command	array with the current conversation options.
+	 * @param	_options	array containing the goto index for the conversation and the name of the story.
+	 */
 	private function evaluate(_command:Array<Array<String>>, _options:Array<String>)
 	{
-		//trace(_command + " " + _options);
-		
 		switch (_command[0][1].toLowerCase())
 		{
-			default: trace(_command);
-			
 			case "conversation":
 				fml();
 				stories.nextPart(_options[1], _command[0][2]);
 				evaluate(stories.nextText(_options[1], 1), [null, _options[1]]);
 			
 			case "gadget":
-				//trace(_command + " " + _options);
 				gadget.addNotification(_command[0][2], conversationCallback, [_command[0][0], _options[1]]);
+			
+			default: conversation.set(_command, _options[1], map.getLocation());
 		}
 	}
 	
+	/**
+	 * As it seems call backs stay on objects after removing them, it drove me nuts.
+	 */
 	private function fml()
 	{
+		conversation.removeButtons();
 		remove(conversation);
 		conversation.destroy();
 		conversation = new ConversationUI(conversationCallback);
 	}
 	
-	/*private function FUCKMYLIFE()
-	{
-		remove(conversation);
-		conversation.destroy();
-		conversation = new ConversationUI(conversationCallback);
-	}*/
-	
+	/**
+	 * The function containing the actions to perform, also used for debugging.
+	 * 
+	 * @param	_action		The action to perform.
+	 */
 	private function actions(_action:String)
 	{
 		switch(_action)
 		{
 			case "A":
-				//trace(stories.currentText("bully")[0][1]);
-				if (stories.currentText("bully")[0][1] != "player")// || stories.currentText("bully")[0][1] == "npc")
-					conversation.set([["0", "player", "Ik heb niets te vertellen", "player"]], "bully");
-				add(conversation);
+				if (conversation == null)
+					conversation = new ConversationUI(conversationCallback);
 				
-			case "B": trace("B");
-			case "C": trace("C");
-			case "D": trace("D");
-			case "E": trace("E");
+				if (stories.currentText("bully") == null)
+					conversation.set(stories.nextText("bully", 1), "bully", map.getLocation());
+				else if (stories.currentText("bully")[0][1] != "player")
+					conversation.set([["0", "player", "Ik heb nu niets te melden...", "player"]], "bully", map.getLocation());
+				
+				add(conversation);
+			
+			case "B":
+				stories.nextPart("bully", "phone_bullyDutch");
+				evaluate(stories.nextText("bully", 1), [null, "bully"]);
+			
+			case "C":
+				
+			
+			case "D":
+				
+			
+			case "E":
+				
 		}
 	}
 	
@@ -134,10 +147,7 @@ class PlayState extends FlxState
 	override public function update()
 	{
 		super.update();
-		
-		//if (gadget.gadgetOpen && members.indexOf(actionBar) != -1) remove(actionBar);
-		//else if (!gadget.gadgetOpen && members.indexOf(actionBar) == -1) add(actionBar);
-		
+				
 		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
 	}
 	
@@ -150,6 +160,11 @@ class PlayState extends FlxState
 		
 		map = null;
 		gadget = null;
+		
+		#if !FLX_NO_DEBUG
+		actionBar = null;
+		#end
+		
 		conversation = null;
 		stories = null;
 	}

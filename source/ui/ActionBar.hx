@@ -7,6 +7,8 @@ import flixel.addons.ui.FlxButtonPlus;
 
 /**
  * @author Sjoer van der Ploeg
+ * 
+ * ActionBar only used for debugging purposes.
  */
 
 class ActionBar extends FlxSpriteGroup
@@ -26,7 +28,7 @@ class ActionBar extends FlxSpriteGroup
 	}
 	
 	/**
-	 * Add the background for the main menu.
+	 * Add the background.
 	 */
 	private function add_bgSprite()
 	{

@@ -80,9 +80,9 @@ class MapDisplay extends FlxSpriteGroup
 			for (_x in 0...navDirections[_y].length)
 				if (navDirections[_y][_x] != null)
 				{
-					navButtons.push(new FlxButtonPlus(FlxG.width * 0.5 - 64 + _x * 64, FlxG.height * 0.5 + 256 + _y * 64, setLocation.bind(navDirections[_y][_x]), navDirections[_y][_x], 64, 64));
-					navButtons[navButtons.length - 1].textNormal.size = 32;
-					navButtons[navButtons.length - 1].textHighlight.size = 32;
+						navButtons.push(new FlxButtonPlus(FlxG.width * 0.5 - 64 + _x * 64, FlxG.height * 0.5 + 256 + _y * 64, setLocation.bind(navDirections[_y][_x]), navDirections[_y][_x], 64, 64));
+						navButtons[navButtons.length - 1].textNormal.size = 32;
+						navButtons[navButtons.length - 1].textHighlight.size = 32;
 					add(navButtons[navButtons.length - 1]);
 				}
 		
@@ -96,17 +96,17 @@ class MapDisplay extends FlxSpriteGroup
 	
 	private function setLocation(_location:String)
 	{
-		//trace(_location);
 		var _direction = directions[location][direction[location].indexOf(_location)];		// Yup it does what it says it does ;)
-		//trace(_direction);
 		
 		tiles[location].visible = false;
 		tiles[_direction].visible = true;
 		
 		location = _direction;
 		
-		if (location == 15) add(character);
-		else remove(character);
+		if (location == 15)
+			add(character);
+		else
+			remove(character);
 		
 		setDirections();
 	}
@@ -118,18 +118,15 @@ class MapDisplay extends FlxSpriteGroup
 	
 	private function setDirections()
 	{
-		//trace(direction[location]);
-		
 		for (_button in navButtons)
-		{
 			if (direction[location].indexOf(_button.textNormal.text) != -1)
-			{
 				_button.visible = true;
-			}
 			else
-			{
 				_button.visible = false;
-			}
-		}
+	}
+	
+	public function getLocation(): Int
+	{
+		return location;
 	}
 }
