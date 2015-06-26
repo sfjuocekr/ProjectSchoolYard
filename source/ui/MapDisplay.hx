@@ -16,7 +16,7 @@ import flixel.FlxG;
 class MapDisplay extends FlxSpriteGroup
 {
 	private var tiles:Array<FlxSprite> = new Array<FlxSprite>();
-	
+	private var chars:Array<FlxSprite> = new Array<FlxSprite>();
 												/*
 													0,			1,									2,
 													3,			4,									5,
@@ -55,7 +55,7 @@ class MapDisplay extends FlxSpriteGroup
 	private var location:Int = 10;
 	
 	private var character:FlxButtonPlus;
-	private var charSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/map/15/character.png");
+	private var charSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/map/7/interaction.png");
 	
 	public function new(_callback:Dynamic->Void)
 	{
@@ -69,12 +69,21 @@ class MapDisplay extends FlxSpriteGroup
 		
 		for (_index in 0 ... directions.length)
 			if (_images.indexOf(_index) != -1)
+			{
 				if (FileSystem.exists("assets/images/map/" + _index + "/background.png"))
 				{	
 						tiles[_index] = new FlxSprite(0, 0, "assets/images/map/" + _index + "/background.png");
 						tiles[_index].visible = false;
 					add(tiles[_index]);
 				}
+				
+				if (FileSystem.exists("assets/images/map/" + _index + "/characters.png"))
+				{	
+						chars[_index] = new FlxSprite(0, 0, "assets/images/map/" + _index + "/characters.png");
+						chars[_index].visible = false;
+					add(chars[_index]);
+				}				
+			}
 		
 		for (_y in 0...navDirections.length)
 			for (_x in 0...navDirections[_y].length)
@@ -87,10 +96,16 @@ class MapDisplay extends FlxSpriteGroup
 				}
 		
 		tiles[location].visible = true;
+		
+		if (chars[location] != null)
+			chars[location].visible = true;
+		
 		setDirections();
 		
 		// dis hacking
-		character = new FlxButtonPlus(1200, 320, _callback.bind("A"), null, 250, 500);
+		character = new FlxButtonPlus(1224, 776.5, _callback.bind("A"), null, 236, 467);
+		character.x -= 236 * 0.5;
+		character.y -= 467 * 0.5;
 		character.loadButtonGraphic(charSprite, charSprite);
 	}
 	
@@ -101,9 +116,15 @@ class MapDisplay extends FlxSpriteGroup
 		tiles[location].visible = false;
 		tiles[_direction].visible = true;
 		
+		if (chars[location] != null)
+			chars[location].visible = false;
+			
+		if (chars[_direction] != null)
+			chars[_direction].visible = true;
+		
 		location = _direction;
 		
-		if (location == 15)
+		if (location == 7)
 			add(character);
 		else
 			remove(character);

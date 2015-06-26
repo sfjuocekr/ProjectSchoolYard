@@ -11,6 +11,8 @@ import openfl.utils.Timer;
 
 /**
  * @author Sjoer van der Ploeg
+ * 
+ * The KJRW Gadget.
  */
 
 class Gadget extends FlxSpriteGroup
@@ -25,21 +27,24 @@ class Gadget extends FlxSpriteGroup
 	
 	private var text:FlxText = new FlxText();
 	
-	private var defaultText:String = "There are no messages to be shown right now!";
+	private var defaultText:String = "Er zijn op het moment geen berichten!";
 	
 	private var timer:Timer = new Timer(1000, 1);
 	private var blinker:Timer = new Timer(250, 0);
 	
 	private var textRead:Bool = false;
-	public var gadgetOpen:Bool = false;
+	private var gadgetOpen:Bool = false;
 	private var notification:Bool = false;
 	
 	private var callback:Dynamic->Void;
 	private var callbackOptions:Array<String>;
 	
-	public function new(_x:Float = 0, _y:Float = 0)
+	/**
+	 * Put everything for the gadget on screen.
+	 */
+	public function new()
 	{
-		super(_x, _y, 0);
+		super(0, 0, 0);
 		
 		width = FlxG.width;
 		height = FlxG.height;
@@ -99,32 +104,46 @@ class Gadget extends FlxSpriteGroup
 		blinker.addEventListener(TimerEvent.TIMER, blink);
 	}
 	
+	/**
+	 * Flip the gadget around, checks if the text was read and calls the callback if true;
+	 * 
+	 * @param	_sprite		the sprite that was clicked.
+	 */
 	private function flip(_sprite:FlxSprite)
 	{
-		if (backside.visible) timer.start();
-		else text.visible = false;
+		if (backside.visible)
+			timer.start();
+		else
+			text.visible = false;
 		
 		if (textRead)
 		{
 			text.text = "";
 			textRead = false;
+			
 			callback(callbackOptions);
 		}
-		
-		else if (text.text == defaultText) text.text = "";
+		else if (text.text == defaultText)
+			text.text = "";
 		
 		gadgetOpen = bg.visible = edge.visible = background.visible = logo.visible = screen.visible = (_sprite == backside);
 		backside.visible = !_sprite.visible;
 		
-		if (notification && !backside.visible) notificationSprite.visible = false;
+		if (notification && !backside.visible)
+			notificationSprite.visible = false;
 	}
 	
+	/**
+	 * Timer for the "loading screen".
+	 * 
+	 * @param	_event		the event that triggered.
+	 */
 	private function onTimer(_event:TimerEvent)
 	{
 		if (gadgetOpen && text.text != "")
 		{
 			notification = false;
-			textRead = true; //hack
+			textRead = true;
 			
 			logo.visible = false;
 			text.visible = true;
@@ -139,22 +158,30 @@ class Gadget extends FlxSpriteGroup
 		}
 	}
 	
+	/**
+	 * Timer for the notification blinking exclamationmark.
+	 * 
+	 * @param	_event		the event that triggered.
+	 */	
 	private function blink(_event:TimerEvent)
 	{
 		if (!notification)
 		{
 			blinker.reset();
+			
 			notificationSprite.visible = false;
 		}
-		
 		else if (notification && backside.visible)
-		{
 			notificationSprite.visible = !notificationSprite.visible;
-		}
-		
-		//else if (!backside.visible) notificationSprite.visible = false;
 	}
 	
+	/**
+	 * Function to add a notification to the gadget and start the blinking exclamationmark.
+	 * 
+	 * @param	_text			text to be chown on the gadget screen.
+	 * @param	_callback		the function to call.
+	 * @param	_options		the options to pass to the callback function.
+	 */
 	public function addNotification(_text:String, _callback:Dynamic->Void, _options:Array<String>)
 	{
 		text.text = _text;
@@ -162,9 +189,8 @@ class Gadget extends FlxSpriteGroup
 		callback = _callback;
 		callbackOptions = _options;
 		
-		//ugly hack, needs an array and some routine to switch notifications etc etc etc
-		
 		notification = true;
+		
 		blinker.start();
 	}
 	
@@ -175,10 +201,24 @@ class Gadget extends FlxSpriteGroup
 	{
 		super.destroy();
 		
+		timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimer);
+		blinker.removeEventListener(TimerEvent.TIMER, blink);
+		
 		screen = null;
 		logo = null;
 		background = null;
 		edge = null;
 		backside = null;
+		notificationSprite = null;
+		bg = null;
+		text = null;
+		defaultText = null;
+		timer = null;
+		blinker = null;
+		textRead = null;
+		gadgetOpen = null;
+		notification = null;
+		callback = null;
+		callbackOptions = null;
 	}
 }

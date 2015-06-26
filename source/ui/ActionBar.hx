@@ -28,18 +28,19 @@ class ActionBar extends FlxSpriteGroup
 	}
 	
 	/**
-	 * Add the background.
+	 * Adds the background to the group.
 	 */
 	private function add_bgSprite()
 	{
-		bgSprite.x = FlxG.width * 0.5 - (bgSprite.width * 0.5);
-		bgSprite.y = FlxG.height - bgSprite.height;
-		
+			bgSprite.x = FlxG.width * 0.5 - (bgSprite.width * 0.5);
+			bgSprite.y = FlxG.height - bgSprite.height;
 		add(bgSprite);
 	}
 	
 	/**
 	 * Add the buttons for the actionbar.
+	 * 
+	 * @param	_func	function to call when clicking a button.
 	 */
 	private function add_buttons(_func:Dynamic->Void)
 	{
@@ -64,5 +65,18 @@ class ActionBar extends FlxSpriteGroup
 		}
 		
 		add(buttons);
+	}
+	
+	/**
+	 * EXTERMINATE!!!
+	 */
+	override public function destroy()
+	{
+		super.destroy();
+		
+		bgSprite = null;
+		buttons = null;
+		normalButton = null;
+		highlightButton = null;
 	}
 }

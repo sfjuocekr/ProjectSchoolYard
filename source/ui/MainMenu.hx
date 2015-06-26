@@ -14,9 +14,11 @@ class MainMenu extends FlxSpriteGroup
 	private var bgSprite:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/menubg.png");
 	private var buttons:FlxSpriteGroup = new FlxSpriteGroup();
 	
-	//private var normalButton:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/ButtonNormal.png");
-	//private var highlightButton:FlxSprite = new FlxSprite(0, 0, "assets/images/menu/ButtonHighlight.png");
-	
+	/**
+	 * Make a new MainMenu.
+	 * 
+	 * @param	_func	function to call when clicking a button.
+	 */
 	public function new(_func:Dynamic->Void)
 	{
 		super();
@@ -38,6 +40,8 @@ class MainMenu extends FlxSpriteGroup
 	
 	/**
 	 * Add the buttons for the main menu.
+	 * 
+	 * @param	_func	function to call when clicking a button.
 	 */
 	private function add_buttons(_func:Dynamic->Void)
 	{
@@ -48,17 +52,6 @@ class MainMenu extends FlxSpriteGroup
 		buttons.add(new FlxButtonPlus(96,  96 + 96 + (buttons.length * 72), _func.bind("help" ), null,  256, 128));
 		buttons.add(new FlxButtonPlus(96, 160 + 96 + (buttons.length * 56), _func.bind("about"), null,  256, 128));
 		buttons.add(new FlxButtonPlus(96, 256 + 32 + (buttons.length * 64), _func.bind("exit" ), null,  256, 128));
-		
-		/*for (_button in buttons.members)
-		{
-			cast(_button, FlxButtonPlus).textNormal.size = 32;
-			cast(_button, FlxButtonPlus).textHighlight.size = 32;
-			
-			cast(_button, FlxButtonPlus).textNormal.y += 8;
-			cast(_button, FlxButtonPlus).textHighlight.y += 8;
-			
-			cast(_button, FlxButtonPlus).loadButtonGraphic(normalButton, highlightButton);
-		}*/
 		
 		cast(buttons.members[0], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text1.png"), new FlxSprite(0, 0, "assets/images/menu/text1highlight.png"));
 		cast(buttons.members[1], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text2.png"), new FlxSprite(0, 0, "assets/images/menu/text2highlight.png"));
@@ -76,8 +69,6 @@ class MainMenu extends FlxSpriteGroup
 		super.destroy();
 		
 		bgSprite = null;
-		//normalButton = null;
-		//highlightButton = null;
 		buttons = null;
 	}
 }
