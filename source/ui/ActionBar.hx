@@ -1,9 +1,9 @@
 package ui;
 
-import flixel.group.FlxSpriteGroup;
-import flixel.FlxSprite;
-import flixel.FlxG;
 import flixel.addons.ui.FlxButtonPlus;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.group.FlxSpriteGroup;
 
 /**
  * @author Sjoer van der Ploeg

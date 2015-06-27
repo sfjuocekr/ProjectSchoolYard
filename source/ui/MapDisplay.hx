@@ -9,8 +9,9 @@ import flixel.plugin.MouseEventManager;
 import flixel.FlxG;
 
 /**
- * ...
  * @author Sjoer van der Ploeg
+ * 
+ * Dirty map navigation hacks
  */
 
 class MapDisplay extends FlxSpriteGroup
@@ -124,7 +125,7 @@ class MapDisplay extends FlxSpriteGroup
 		
 		location = _direction;
 		
-		if (location == 7)
+		if (location == 7)		// dat hack
 			add(character);
 		else
 			remove(character);

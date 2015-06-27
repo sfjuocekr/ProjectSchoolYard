@@ -3,12 +3,12 @@ package states;
 import flixel.FlxG;
 import flixel.FlxState;
 import game.StoryContainer;
-#if !FLX_NO_DEBUG
-import ui.ActionBar;
-#end
 import ui.ConversationUI;
 import ui.Gadget;
 import ui.MapDisplay;
+#if !FLX_NO_DEBUG
+import ui.ActionBar;
+#end
 
 /**
  * @author Sjoer van der Ploeg

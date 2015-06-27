@@ -30,14 +30,14 @@ class MenuState extends FlxState
 	 * 
 	 * @param	_level		the state to load.
 	 */
-	private function level(_level:String)
+	private function level(_level:Int)
 	{
 		switch (_level)
 		{
-			case "game":				FlxG.switchState(new PlayState());
-			/*case "help":				FlxG.switchState(null);
-			case "about":				FlxG.switchState(null);*/
-			case "exit":				Sys.exit(0);
+			case 0:				FlxG.switchState(new PlayState());
+			/*case 1:				FlxG.switchState(null);
+			case 2:				FlxG.switchState(null);*/
+			case 3:				Sys.exit(0);
 			default: trace("This is not supposed to happen!");
 		}
 	}

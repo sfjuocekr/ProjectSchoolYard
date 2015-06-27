@@ -1,11 +1,10 @@
 package ui;
 
 import flixel.addons.ui.FlxButtonPlus;
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
-import flixel.FlxG;
 import flixel.text.FlxText;
-import flixel.addons.ui.FlxUIText;
 
 /**
  * @author Sjoer van der Ploeg

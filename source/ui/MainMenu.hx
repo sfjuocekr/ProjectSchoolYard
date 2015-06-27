@@ -1,9 +1,9 @@
 package ui;
 
-import flixel.group.FlxSpriteGroup;
-import flixel.FlxSprite;
-import flixel.FlxG;
 import flixel.addons.ui.FlxButtonPlus;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.group.FlxSpriteGroup;
 
 /**
  * @author Sjoer van der Ploeg
@@ -48,15 +48,11 @@ class MainMenu extends FlxSpriteGroup
 		buttons.x = bgSprite.x;
 		buttons.y = bgSprite.y;
 		
-		buttons.add(new FlxButtonPlus(96,  32 + 96 + (buttons.length * 64), _func.bind("game" ), null,  256, 128));
-		buttons.add(new FlxButtonPlus(96,  96 + 96 + (buttons.length * 72), _func.bind("help" ), null,  256, 128));
-		buttons.add(new FlxButtonPlus(96, 160 + 96 + (buttons.length * 56), _func.bind("about"), null,  256, 128));
-		buttons.add(new FlxButtonPlus(96, 256 + 32 + (buttons.length * 64), _func.bind("exit" ), null,  256, 128));
-		
-		cast(buttons.members[0], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text1.png"), new FlxSprite(0, 0, "assets/images/menu/text1highlight.png"));
-		cast(buttons.members[1], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text2.png"), new FlxSprite(0, 0, "assets/images/menu/text2highlight.png"));
-		cast(buttons.members[2], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text3.png"), new FlxSprite(0, 0, "assets/images/menu/text3highlight.png"));
-		cast(buttons.members[3], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text4.png"), new FlxSprite(0, 0, "assets/images/menu/text4highlight.png"));
+		for (_index in 0...4)
+		{
+			buttons.add(new FlxButtonPlus(128, ((_index == 3) ? 192 : 160) + (_index * 112), _func.bind(_index), null,  256, 96));
+			cast(buttons.members[_index], FlxButtonPlus).loadButtonGraphic(new FlxSprite(0, 0, "assets/images/menu/text" + (_index + 1) + ".png"), new FlxSprite(0, 0, "assets/images/menu/text" + (_index + 1) + "highlight.png"));
+		}
 		
 		add(buttons);
 	}
