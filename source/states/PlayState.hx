@@ -127,8 +127,7 @@ class PlayState extends FlxState
 				add(conversation);
 			
 			case "B":
-				stories.nextPart("bully", "phone_bullyDutch");
-				evaluate(stories.nextText("bully", 1), [null, "bully"]);
+				trace("reception");
 			
 			case "C":
 				
