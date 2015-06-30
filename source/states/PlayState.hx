@@ -128,6 +128,14 @@ class PlayState extends FlxState
 			
 			case "B":
 				trace("reception");
+				trace(stories.currentText("bully")[0]);
+				
+				/*
+				if (stories.currentText("bully")[0][1] == "npc" && stories.currentText("bully")[0][3] != "Receptioniste")
+					stories.nextText("bully", 1);
+				*/
+				
+				// jump to reception dialog, move conversation pointer to correct location etc
 			
 			case "C":
 				
